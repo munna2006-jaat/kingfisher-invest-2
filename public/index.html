@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kingfisher Capital - The King of Good Times | Official Investment Portal 2</title>
+  <meta name="description" content="Kingfisher Official Aviation & Lifestyle Investment Platform - Daily returns, 3-level team commission, and instant UPI recharge & withdrawals.">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="desktop-wrapper">
+
+    <!-- ==========================================
+         SCREEN 1: AUTHENTICATION (LOGIN / REGISTER)
+         ========================================== -->
+    <section id="screen-auth" class="screen active">
+      <div class="auth-hero-banner">
+        <img src="/images/kingfisher_banner.jpg" alt="Kingfisher Banner">
+        <div class="auth-hero-overlay"></div>
+      </div>
+
+      <div class="auth-card-container">
+        <div class="auth-card">
+          <!-- Floating Brand Logo Badge -->
+          <div class="auth-brand-badge">
+            <img src="/images/kingfisher_logo.jpg" alt="Kingfisher Logo">
+          </div>
+
+          <!-- Auth Switcher Tabs -->
+          <div class="auth-tabs">
+            <button id="authTabLogin" class="auth-tab-btn" onclick="switchAuthTab('login')">Login</button>
+            <button id="authTabRegister" class="auth-tab-btn active" onclick="switchAuthTab('register')">Register</button>
+          </div>
+
+          <!-- Register Form -->
+          <form id="registerForm" onsubmit="handleRegister(event)">
+            <div class="auth-input-group">
+              <div class="auth-input-wrapper">
+                <div class="auth-input-icon"><i class="fa-solid fa-user"></i></div>
+                <input type="text" id="regName" class="auth-input" placeholder="Enter Your Name" required>
+              </div>
+            </div>
+
+            <div class="auth-input-group">
+              <div class="auth-input-wrapper">
+                <div class="auth-input-icon"><i class="fa-solid fa-phone"></i></div>
+                <div class="auth-prefix">+91</div>
+                <input type="tel" id="regPhone" class="auth-input" placeholder="Enter Phone Number" maxlength="10" required>
+              </div>
+            </div>
+
+            <div class="auth-input-group">
+              <div class="auth-input-wrapper">
+                <div class="auth-input-icon"><i class="fa-solid fa-lock"></i></div>
+                <input type="password" id="regPassword" class="auth-input" placeholder="Create Password" required>
+                <i class="fa-regular fa-eye auth-action-icon" onclick="togglePasswordVisibility('regPassword', this)"></i>
+              </div>
+            </div>
+
+            <div class="auth-input-group">
+              <div class="auth-input-wrapper">
+                <div class="auth-input-icon"><i class="fa-solid fa-shield-cat"></i></div>
+                <input type="password" id="regConfirmPassword" class="auth-input" placeholder="Confirm Password" required>
+                <i class="fa-regular fa-eye auth-action-icon" onclick="togglePasswordVisibility('regConfirmPassword', this)"></i>
+              </div>
+            </div>
+
+            <div class="auth-input-group">
+              <div class="auth-input-wrapper">
+                <div class="auth-input-icon"><i class="fa-solid fa-user-plus"></i></div>
+                <input type="text" id="regRefCode" class="auth-input" value="598823" placeholder="Invitation Code">
+                <i class="fa-solid fa-circle-xmark auth-action-icon" onclick="document.getElementById('regRefCode').value=''"></i>
+              </div>
+            </div>
+
+            <label class="auth-terms">
+              <input type="checkbox" id="regTerms" checked required>
+              <span>I have read and agree to <a href="javascript:void(0)" onclick="showTerms()">Terms & Conditions</a></span>
+            </label>
+
+            <button type="submit" class="btn-primary-purple">
+              <span>Register Now</span>
+              <span class="circle-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+
+            <div class="auth-footer-toggle">
+              <span class="bars">■■</span>
+              <span>Already have an account? <a href="javascript:void(0)" onclick="switchAuthTab('login')">Login</a></span>
+              <span class="bars">■■</span>
+            </div>
+          </form>
+
+          <!-- Login Form -->
+          <form id="loginForm" style="display: none;" onsubmit="handleLogin(event)">
+            <div class="auth-input-group">
+              <div class="auth-input-wrapper">
+                <div class="auth-input-icon"><i class="fa-solid fa-phone"></i></div>
+                <div class="auth-prefix">+91</div>
+                <input type="tel" id="loginPhone" class="auth-input" value="9876543210" placeholder="Enter Phone Number" maxlength="10" required>
+              </div>
+            </div>
+
+            <div class="auth-input-group">
+              <div class="auth-input-wrapper">
+                <div class="auth-input-icon"><i class="fa-solid fa-lock"></i></div>
+                <input type="password" id="loginPassword" class="auth-input" value="password123" placeholder="Enter Password" required>
+                <i class="fa-regular fa-eye auth-action-icon" onclick="togglePasswordVisibility('loginPassword', this)"></i>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary-purple" style="margin-top: 18px;">
+              <span>Login Now</span>
+              <span class="circle-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+
+            <div class="auth-footer-toggle">
+              <span class="bars">■■</span>
+              <span>Don't have an account? <a href="javascript:void(0)" onclick="switchAuthTab('register')">Register</a></span>
+              <span class="bars">■■</span>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 2: HOME SCREEN (IMAGE 5)
+         ========================================== -->
+    <section id="screen-home" class="screen">
+      <div class="home-container">
+        <!-- Banner Carousel -->
+        <div class="home-banner-wrapper">
+          <img id="homeBannerImg" src="/images/kingfisher_banner.jpg" alt="Kingfisher Banner">
+          <button class="banner-arrow left" onclick="slideBanner(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="banner-arrow right" onclick="slideBanner(1)"><i class="fa-solid fa-chevron-right"></i></button>
+          <div class="banner-dots">
+            <span class="banner-dot active"></span>
+            <span class="banner-dot"></span>
+            <span class="banner-dot"></span>
+          </div>
+        </div>
+
+        <!-- Announcement Marquee Ticker -->
+        <div class="home-ticker">
+          <span class="speaker"><i class="fa-solid fa-bullhorn"></i></span>
+          <marquee id="homeTickerText" behavior="scroll" direction="left">
+            🎉 Welcome to Kingfisher Official Energy Investment! Enjoy up to 40% 3-level team commission and daily instant withdrawals! Earn up to ₹19,053 daily!
+          </marquee>
+        </div>
+
+        <!-- 4 Quick Actions (Recharge, Withdraw, Invite, Online) -->
+        <div class="quick-actions-grid">
+          <div class="quick-action-card" onclick="switchNav('recharge')">
+            <div class="quick-action-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="quick-action-label">Recharge</div>
+          </div>
+          <div class="quick-action-card" onclick="switchNav('withdraw')">
+            <div class="quick-action-icon"><i class="fa-solid fa-inbox"></i></div>
+            <div class="quick-action-label">Withdraw</div>
+          </div>
+          <div class="quick-action-card" onclick="switchNav('team')">
+            <div class="quick-action-icon"><i class="fa-solid fa-share-nodes"></i></div>
+            <div class="quick-action-label">Invite</div>
+          </div>
+          <div class="quick-action-card" onclick="openSupportModal()">
+            <div class="quick-action-icon"><i class="fa-solid fa-headset"></i></div>
+            <div class="quick-action-label">Online</div>
+          </div>
+        </div>
+
+        <!-- Plan Category Toggle (Normal Plan | Vip Plan) -->
+        <div class="plans-toggle-container">
+          <button id="tabNormalPlan" class="plan-toggle-btn active" onclick="filterPlans('normal')">Normal Plan</button>
+          <button id="tabVipPlan" class="plan-toggle-btn" onclick="filterPlans('vip')">Vip Plan</button>
+        </div>
+
+        <!-- Plans Cards List Container -->
+        <div id="plansListContainer" class="plans-list">
+          <!-- Populated dynamically via JS matching Image 5 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 3: DEDICATED RECHARGE (DEPOSIT) PAGE
+         ========================================== -->
+    <section id="screen-recharge" class="screen">
+      <div class="page-top-nav">
+        <button class="btn-nav-back" onclick="switchNav('home')"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="page-nav-title">Recharge</div>
+        <div style="width: 34px;"></div>
+      </div>
+
+      <div class="page-content-padding">
+        <!-- Balance Display Banner -->
+        <div class="balance-gradient-card">
+          <div class="bal-label">Current Available Balance</div>
+          <div id="rechargeUserBalDisplay" class="bal-val">₹0.00</div>
+        </div>
+
+        <!-- Enter Amount Card -->
+        <div class="card-white-rounded">
+          <div class="card-title-sub">
+            <span class="main-txt">Deposit Amount</span>
+            <span class="hint-txt">Tap quick amount or enter manually</span>
+          </div>
+
+          <div class="amount-input-box">
+            <span class="currency-prefix">₹</span>
+            <input type="number" id="depositAmountInput" class="amount-field" value="720" min="285" oninput="updateRechargeDisplay(this.value)">
+            <button class="btn-clear-input" onclick="document.getElementById('depositAmountInput').value=''"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+
+          <div class="min-amount-notice">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>Minimum recharge <strong id="minRechargeHint">₹285</strong></span>
+          </div>
+
+          <!-- Quick Chips -->
+          <div class="quick-chips-grid">
+            <button class="chip-btn selected" onclick="selectRechargeChip(720, this)">₹720</button>
+            <button class="chip-btn" onclick="selectRechargeChip(285, this)">₹285</button>
+            <button class="chip-btn" onclick="selectRechargeChip(1000, this)">₹1,000</button>
+            <button class="chip-btn" onclick="selectRechargeChip(2200, this)">₹2,200</button>
+            <button class="chip-btn" onclick="selectRechargeChip(4735, this)">₹4,735</button>
+            <button class="chip-btn" onclick="selectRechargeChip(8500, this)">₹8,500</button>
+          </div>
+        </div>
+
+        <!-- Step 1: Scan QR & Pay Card -->
+        <div class="card-white-rounded" style="margin-top: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <div class="section-badge-step"><i class="fa-solid fa-qrcode"></i> Step 1: Scan QR Code & Pay</div>
+            <button type="button" class="btn-copy-pill" onclick="refreshClientQr()" style="font-size: 11.5px; padding: 5px 12px; background: #651da9; color: #fff; border: none; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; border-radius: 16px;">
+              <i class="fa-solid fa-arrows-rotate" id="clientRefreshQrIcon"></i> Change / Refresh QR
+            </button>
+          </div>
+          
+          <div class="qr-payment-frame">
+            <div class="qr-timer-pill">
+              <i class="fa-regular fa-clock"></i>
+              <span>Payment Window: <strong id="rechargeTimerTxt">10:00</strong> min</span>
+            </div>
+            <img id="clientRechargeQrImg" src="/images/kingfisher_upi_qr.jpg" alt="Scan QR to Pay" class="qr-code-img" onclick="window.open(this.src, '_blank')" title="Click to view full size">
+            
+            <div id="clientQrBadge" style="margin-top: 8px; font-size: 11px; font-weight: 700; color: #651da9; background: #f3e8ff; padding: 4px 12px; border-radius: 12px; display: inline-flex; align-items: center; gap: 6px;">
+              <span class="status-dot-pulse" style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+              <span id="clientQrTitleTxt">QR Channel 1 (Active)</span>
+            </div>
+
+            <div class="qr-apps-hint">Supported: PhonePe, Google Pay, Paytm, BHIM, CRED</div>
+          </div>
+
+          <!-- Notice if payment fails or bank is busy -->
+          <div style="margin: 12px 0 8px 0; background: #fffbeb; border: 1.5px solid #fde047; border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-triangle-exclamation" style="color: #d97706; font-size: 16px;"></i>
+              <div style="font-size: 12px; color: #92400e; line-height: 1.35;">
+                <strong>Payment nhi ho rhi ya limit full hai?</strong><br>
+                <span style="font-size: 11px; color: #b45309;">Dusra fresh QR lene ke liye yahan click karein:</span>
+              </div>
+            </div>
+            <button type="button" onclick="refreshClientQr()" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 6px rgba(217, 119, 6, 0.3);">
+              <i class="fa-solid fa-arrows-rotate" id="refreshQrHintIcon"></i> Dusra QR Dekhein
+            </button>
+          </div>
+
+          <div class="merchant-upi-box">
+            <div>
+              <div style="font-size: 11px; color: #7d6b99; font-weight: 600;">Merchant UPI ID</div>
+              <div id="clientRechargeUpiIdTxt" class="upi-id-txt">kingfisherpay@okaxis</div>
+            </div>
+            <button class="btn-copy-pill" onclick="copyClientUpiId()"><i class="fa-regular fa-copy"></i> Copy UPI</button>
+          </div>
+
+          <button class="btn-primary-purple" onclick="payWithUpiApp()" style="margin-top: 10px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+            <i class="fa-solid fa-bolt"></i> Pay via UPI App (PhonePe / GPay)
+          </button>
+        </div>
+
+        <!-- Step 2: Enter UTR Card -->
+        <div class="card-white-rounded" style="margin-top: 14px;">
+          <div class="section-badge-step"><i class="fa-solid fa-key"></i> Step 2: Enter 12-Digit UTR / Ref Number</div>
+          <p style="font-size: 12px; color: #64748b; margin-bottom: 10px;">After successful payment in PhonePe/GPay, copy the 12-digit UTR and paste here.</p>
+          
+          <div class="auth-input-wrapper" style="background: #fbf7ff; border: 1.5px solid #d8b4fe;">
+            <input type="text" id="depositUtrInput" class="auth-input" placeholder="e.g. 429188294821" maxlength="12" style="font-size: 15px; font-weight: 700; letter-spacing: 1px;">
+          </div>
+
+          <button class="btn-primary-purple" style="margin-top: 16px;" onclick="submitRechargeUTR()">
+            <span>Confirm Payment & Submit</span>
+            <span class="circle-arrow"><i class="fa-solid fa-check"></i></span>
+          </button>
+        </div>
+
+        <!-- Timeline Instructions Card -->
+        <div class="card-white-rounded" style="margin-top: 14px;">
+          <div class="timeline-title"><i class="fa-solid fa-list-check" style="color: #651da9;"></i> Recharge Guidelines</div>
+          <div class="timeline-step">
+            <div class="timeline-number">1</div>
+            <div class="timeline-text">Minimum deposit amount is ₹285. Pay exact chosen amount.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-number">2</div>
+            <div class="timeline-text">Enter valid 12-digit UPI UTR number after completing transaction.</div>
+          </div>
+          <div class="timeline-step">
+            <div class="timeline-number">3</div>
+            <div class="timeline-text">Balance is credited automatically upon verification (5-15 mins).</div>
+          </div>
+        </div>
+
+        <!-- Recent Recharge History Collapsible -->
+        <div class="card-white-rounded" style="margin-top: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleRechargeRecords()">
+            <span style="font-size: 14.5px; font-weight: 800; color: #27064d;"><i class="fa-solid fa-clock-rotate-left"></i> My Recharge Records</span>
+            <i id="rechargeRecordsChevron" class="fa-solid fa-chevron-down" style="color: #7d6b99;"></i>
+          </div>
+          <div id="inlineRechargeRecords" style="display: none; margin-top: 14px;">
+            <!-- Loaded via JS -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 4: DEDICATED WITHDRAWAL PAGE
+         ========================================== -->
+    <section id="screen-withdraw" class="screen">
+      <div class="page-top-nav">
+        <button class="btn-nav-back" onclick="switchNav('profile')"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="page-nav-title">Withdraw</div>
+        <div style="width: 34px;"></div>
+      </div>
+
+      <div class="page-content-padding">
+        <!-- Balance Display Banner -->
+        <div class="balance-gradient-card">
+          <div class="bal-label">Withdrawable Balance</div>
+          <div id="withdrawUserBalDisplay" class="bal-val">₹0.00</div>
+          <div style="font-size: 11.5px; opacity: 0.85; margin-top: 4px;">Minimum withdrawal ₹200 | Tax fee 10%</div>
+        </div>
+
+        <!-- Withdrawal Amount Card -->
+        <div class="card-white-rounded">
+          <div class="card-title-sub">
+            <span class="main-txt">Withdrawal Amount</span>
+            <span class="hint-txt">Daily Window: 09:00 - 18:00</span>
+          </div>
+
+          <div class="amount-input-box">
+            <span class="currency-prefix">₹</span>
+            <input type="number" id="wdAmountInput" class="amount-field" placeholder="Enter amount (min ₹200)" oninput="calculateWithdrawFee()">
+          </div>
+
+          <!-- Dynamic Fee Breakdown -->
+          <div class="fee-breakdown-box">
+            <div class="fee-row">
+              <span class="fee-label">Processing Fee (10%):</span>
+              <span id="wdFeeTxt" class="fee-val">₹0.00</span>
+            </div>
+            <div class="fee-row total">
+              <span class="fee-label">Net Bank Payout:</span>
+              <span id="wdNetTxt" class="fee-val green">₹0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank Account & UPI Details Card -->
+        <div class="card-white-rounded" style="margin-top: 14px;">
+          <div class="section-badge-step"><i class="fa-solid fa-building-columns"></i> Receiving Bank Details</div>
+          
+          <div class="form-field-group">
+            <label>Account Holder Name</label>
+            <input type="text" id="wdAccountHolder" class="field-input" placeholder="Name as registered with bank">
+          </div>
+
+          <div class="form-field-group">
+            <label>Bank Name</label>
+            <input type="text" id="wdBankName" class="field-input" placeholder="e.g. State Bank of India / HDFC Bank">
+          </div>
+
+          <div class="form-field-group">
+            <label>Bank Account Number</label>
+            <input type="text" id="wdAccountNumber" class="field-input" placeholder="Enter Account Number">
+          </div>
+
+          <div class="form-field-group">
+            <label>IFSC Code</label>
+            <input type="text" id="wdIfsc" class="field-input" placeholder="e.g. SBIN0001234">
+          </div>
+
+          <div class="form-field-group">
+            <label>UPI ID (Optional for faster credit)</label>
+            <input type="text" id="wdUpiId" class="field-input" placeholder="e.g. mobile@upi">
+          </div>
+
+          <button class="btn-primary-purple" style="margin-top: 18px;" onclick="submitWithdrawal()">
+            <span>Submit Withdrawal Request</span>
+            <span class="circle-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+          </button>
+        </div>
+
+        <!-- Rules Notice Card -->
+        <div class="card-white-rounded" style="margin-top: 14px;">
+          <div class="timeline-title"><i class="fa-solid fa-shield-halved" style="color: #651da9;"></i> Withdrawal Policy</div>
+          <p style="font-size: 12.5px; color: #64748b; line-height: 1.5; margin-bottom: 6px;">• Withdrawal is open daily from <strong>09:00 AM to 06:00 PM</strong>.</p>
+          <p style="font-size: 12.5px; color: #64748b; line-height: 1.5; margin-bottom: 6px;">• Payout is processed to your registered Bank Account / UPI within 1-24 hours.</p>
+          <p style="font-size: 12.5px; color: #64748b; line-height: 1.5;">• Ensure your IFSC code and account details are 100% accurate.</p>
+        </div>
+
+        <!-- Recent Withdrawal History Collapsible -->
+        <div class="card-white-rounded" style="margin-top: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleWithdrawRecords()">
+            <span style="font-size: 14.5px; font-weight: 800; color: #27064d;"><i class="fa-solid fa-clock-rotate-left"></i> My Withdrawal Records</span>
+            <i id="withdrawRecordsChevron" class="fa-solid fa-chevron-down" style="color: #7d6b99;"></i>
+          </div>
+          <div id="inlineWithdrawRecords" style="display: none; margin-top: 14px;">
+            <!-- Loaded via JS -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 5: INCOME / ORDERS SCREEN (IMAGE 3)
+         ========================================== -->
+    <section id="screen-income" class="screen">
+      <!-- Curved Purple Header with Countdown -->
+      <div class="income-curved-header">
+        <h2 class="income-header-title">My Orders</h2>
+        
+        <!-- Live Countdown Capsule -->
+        <div class="income-time-capsule">
+          <i class="fa-regular fa-clock"></i>
+          <span>Income Time</span>
+          <strong id="liveIncomeCountdown">12 : 21 : 57</strong>
+        </div>
+      </div>
+
+      <div class="page-content-padding" style="margin-top: -38px;">
+        <!-- 3 Stats Squircles Card -->
+        <div class="orders-stats-card">
+          <div class="order-stat-col">
+            <div class="order-stat-squircle"><i class="fa-solid fa-wallet"></i></div>
+            <div id="statTotalInvested" class="order-stat-val">₹0</div>
+            <div class="order-stat-lbl">Total invested</div>
+          </div>
+          <div class="order-stat-col">
+            <div class="order-stat-squircle"><i class="fa-solid fa-chart-simple"></i></div>
+            <div id="statDailyIncome" class="order-stat-val">₹0</div>
+            <div class="order-stat-lbl">Daily income</div>
+          </div>
+          <div class="order-stat-col">
+            <div class="order-stat-squircle"><i class="fa-solid fa-microchip"></i></div>
+            <div id="statActivePlans" class="order-stat-val">0</div>
+            <div class="order-stat-lbl">Active plans</div>
+          </div>
+        </div>
+
+        <!-- Orders List or Empty State -->
+        <div id="ordersContentContainer">
+          <!-- Populated via JS: If 0 plans -> Image 3 'No plans yet' card; If >0 -> running plans -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 6: TASK / LUCKY SPIN SCREEN (IMAGE 4)
+         ========================================== -->
+    <section id="screen-task" class="screen">
+      <div class="spin-sunburst-header">
+        <h2 class="spin-header-title">Lucky Spin</h2>
+
+        <!-- Interactive Fortune Wheel -->
+        <div class="lucky-wheel-wrapper">
+          <div class="wheel-pointer-needle"></div>
+          <div id="wheelRotatingDisk" class="wheel-disk">
+            <!-- 8 Wheel Segment Labels -->
+            <div class="wheel-sector s1"><span>Sorry<br>🎁</span></div>
+            <div class="wheel-sector s2"><span>₹5<br>Cash</span></div>
+            <div class="wheel-sector s3"><span>₹10<br>Cash</span></div>
+            <div class="wheel-sector s4"><span>₹15<br>Cash</span></div>
+            <div class="wheel-sector s5"><span>₹50<br>Cash</span></div>
+            <div class="wheel-sector s6"><span>₹500<br>Cash</span></div>
+            <div class="wheel-sector s7"><span>₹1000<br>Cash</span></div>
+            <div class="wheel-sector s8"><span>₹5000<br>Cash</span></div>
+          </div>
+          <!-- Center Tap Button -->
+          <div class="wheel-center-btn" onclick="playSpinWheel()">
+            <span class="spin-main-txt">SPIN</span>
+            <span class="spin-sub-txt">tap</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-content-padding" style="margin-top: -30px;">
+        <!-- Spins Status Card -->
+        <div class="card-white-rounded spin-status-card">
+          <div class="spin-counter-left">
+            <div class="spin-gift-squircle"><i class="fa-solid fa-gift"></i></div>
+            <div>
+              <div id="userSpinsCount" class="spins-big-val">0</div>
+              <div class="spins-lbl">Spins left</div>
+            </div>
+          </div>
+          <button id="btnSpinAction" class="btn-spin-pill" onclick="playSpinWheel()">No spins left</button>
+        </div>
+
+        <p style="text-align: center; font-size: 12px; color: #7d6b99; margin: 12px 0 16px 0;">You're out of spins. Purchase a plan to get more.</p>
+
+        <!-- Get More Spins Timeline Card -->
+        <div class="card-white-rounded">
+          <div class="timeline-title" style="margin-bottom: 4px;">Get more spins</div>
+          <p style="font-size: 12px; color: #7d6b99; margin-bottom: 16px;">Every successful plan purchase earns you one spin.</p>
+
+          <div class="spin-guide-step">
+            <div class="step-num-badge">1</div>
+            <div class="step-details">
+              <div class="step-title">Buy any active plan</div>
+              <div class="step-sub">Every successful purchase gives you 1 spin.</div>
+            </div>
+          </div>
+
+          <div class="spin-guide-step">
+            <div class="step-num-badge">2</div>
+            <div class="step-details">
+              <div class="step-title">Spin the wheel</div>
+              <div class="step-sub">Tap SPIN and let the wheel decide your prize.</div>
+            </div>
+          </div>
+
+          <div class="spin-guide-step">
+            <div class="step-num-badge">3</div>
+            <div class="step-details">
+              <div class="step-title">Cash lands in your wallet</div>
+              <div class="step-sub">Winnings are added instantly and visible under Income.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Attendance Bonus Card -->
+        <div class="card-white-rounded" style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #27064d;">Daily Attendance Check-in</div>
+            <div style="font-size: 12px; color: #7d6b99;">Claim free ₹15 everyday!</div>
+          </div>
+          <button id="btnDailyAttendance" onclick="dailyCheckIn()" class="btn-claim-pill">Claim ₹15</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 7: TEAM SCREEN (IMAGE 2)
+         ========================================== -->
+    <section id="screen-team" class="screen">
+      <!-- Curved Purple Header -->
+      <div class="team-curved-header">
+        <div class="team-header-title">My Team</div>
+        <div class="team-header-content">
+          <div>
+            <div id="teamTotalMembers" class="team-big-count">0</div>
+            <div class="team-count-sub">Members across 3 levels</div>
+          </div>
+          <div class="team-header-squircle">
+            <i class="fa-solid fa-users"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-content-padding" style="margin-top: -38px;">
+        <!-- 3-Column Team Stats Card -->
+        <div class="team-stats-card">
+          <div class="team-col">
+            <div class="team-stat-squircle"><i class="fa-solid fa-credit-card"></i></div>
+            <div id="statTeamRecharge" class="team-stat-amt">₹0</div>
+            <div class="team-stat-txt">Team recharge</div>
+          </div>
+          <div class="team-col">
+            <div class="team-stat-squircle"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+            <div id="statTeamWithdraw" class="team-stat-amt">₹0</div>
+            <div class="team-stat-txt">Team withdraw</div>
+          </div>
+          <div class="team-col">
+            <div class="team-stat-squircle"><i class="fa-solid fa-user-group"></i></div>
+            <div id="statTeamMembersCount" class="team-stat-amt">0</div>
+            <div class="team-stat-txt">Team members</div>
+          </div>
+        </div>
+
+        <!-- Grow Your Team Banner Card -->
+        <div class="grow-team-banner">
+          <div>
+            <div class="grow-title">Grow your team</div>
+            <div class="grow-desc">Earn up to 40% on every plan your team buys.</div>
+          </div>
+          <button class="btn-invite-white-pill" onclick="copyReferralLink()">
+            <i class="fa-solid fa-share-nodes"></i> Invite
+          </button>
+        </div>
+
+        <!-- Referral Code Box -->
+        <div class="card-white-rounded" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <div style="font-size: 11.5px; color: #7d6b99; font-weight: 600;">My Referral Code</div>
+            <div id="myInviteCodeText" style="font-size: 18px; font-weight: 800; color: #430d78; letter-spacing: 1px;">598823</div>
+          </div>
+          <button class="btn-copy-pill" onclick="copyReferralCode()"><i class="fa-regular fa-copy"></i> Copy Code</button>
+        </div>
+
+        <!-- Team Levels -->
+        <div class="team-levels-header-row">
+          <span class="left-title">Team levels</span>
+          <span class="right-subtitle">Tap a level to see members</span>
+        </div>
+
+        <!-- Level 1 -->
+        <div class="level-pill-card" onclick="showLevelMembers(1)">
+          <div class="level-tag-badge">Level<strong>1</strong></div>
+          <div class="level-info-col">
+            <div class="level-top-row">
+              <span id="lvl1Members" class="members-count">0 members</span>
+              <span class="commission-pill">40% commission</span>
+            </div>
+            <div class="progress-bar-track"><div id="lvl1Progress" class="progress-bar-fill" style="width: 15%;"></div></div>
+            <div class="level-bottom-row">
+              <span id="lvl1Active">0 active</span>
+              <span id="lvl1Recharge">Recharge ₹0</span>
+            </div>
+          </div>
+          <div class="chevron-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+
+        <!-- Level 2 -->
+        <div class="level-pill-card" onclick="showLevelMembers(2)">
+          <div class="level-tag-badge" style="background: linear-gradient(135deg, #6c22bd, #8b3fdc);">Level<strong>2</strong></div>
+          <div class="level-info-col">
+            <div class="level-top-row">
+              <span id="lvl2Members" class="members-count">0 members</span>
+              <span class="commission-pill">3% commission</span>
+            </div>
+            <div class="progress-bar-track"><div id="lvl2Progress" class="progress-bar-fill" style="width: 8%;"></div></div>
+            <div class="level-bottom-row">
+              <span id="lvl2Active">0 active</span>
+              <span id="lvl2Recharge">Recharge ₹0</span>
+            </div>
+          </div>
+          <div class="chevron-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+
+        <!-- Level 3 -->
+        <div class="level-pill-card" onclick="showLevelMembers(3)">
+          <div class="level-tag-badge" style="background: linear-gradient(135deg, #8b3fdc, #a855f7);">Level<strong>3</strong></div>
+          <div class="level-info-col">
+            <div class="level-top-row">
+              <span id="lvl3Members" class="members-count">0 members</span>
+              <span class="commission-pill">1% commission</span>
+            </div>
+            <div class="progress-bar-track"><div id="lvl3Progress" class="progress-bar-fill" style="width: 5%;"></div></div>
+            <div class="level-bottom-row">
+              <span id="lvl3Active">0 active</span>
+              <span id="lvl3Recharge">Recharge ₹0</span>
+            </div>
+          </div>
+          <div class="chevron-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SCREEN 8: PROFILE / WALLET SCREEN (IMAGE 1)
+         ========================================== -->
+    <section id="screen-profile" class="screen">
+      <!-- Profile Header Background -->
+      <div class="profile-hero-header">
+        <div class="profile-header-bar">
+          <div style="width: 38px;"></div>
+          <div class="profile-header-title">Profile</div>
+          <button class="btn-settings-circle" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i></button>
+        </div>
+      </div>
+
+      <div class="page-content-padding" style="margin-top: -95px;">
+        <!-- User Main Card (Image 1) -->
+        <div class="profile-main-user-card">
+          <div class="user-card-top">
+            <div class="user-avatar-wrap">
+              <img id="profileUserAvatar" src="/images/kingfisher_logo.jpg" alt="User Avatar" class="avatar-img">
+              <span class="avatar-edit-badge" onclick="showToast('Avatar is linked to your Kingfisher VIP account', 'success')"><i class="fa-solid fa-pen"></i></span>
+            </div>
+            <div class="user-info-col">
+              <div class="user-phone-pill">
+                <span id="profileUserPhoneMasked">734***4542</span>
+                <i class="fa-solid fa-circle-check verify-badge"></i>
+                <button class="btn-copy-mini" onclick="copyPhone()"><i class="fa-regular fa-copy"></i></button>
+              </div>
+              <div class="user-vip-pill">
+                <i class="fa-solid fa-crown"></i> <span id="profileVipLevel">VIP0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="user-card-divider"></div>
+
+          <!-- 3 Financial Balances -->
+          <div class="user-balances-grid">
+            <div class="user-bal-col">
+              <div id="profileAvailBal" class="user-bal-amount">₹0.00</div>
+              <div class="user-bal-label">Available Balance</div>
+            </div>
+            <div class="user-bal-col">
+              <div id="profileRechargeBal" class="user-bal-amount">₹0.00</div>
+              <div class="user-bal-label">Recharge Balance</div>
+            </div>
+            <div class="user-bal-col">
+              <div id="profileTotalIncome" class="user-bal-amount">₹0.00</div>
+              <div class="user-bal-label">Total Income</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Quick Actions Card (Image 1) -->
+        <div class="profile-quick-actions-card">
+          <div class="profile-action-btn" onclick="switchNav('recharge')">
+            <div class="profile-action-squircle"><i class="fa-solid fa-credit-card"></i></div>
+            <div class="profile-action-label">Recharge</div>
+          </div>
+          <div class="profile-action-btn" onclick="switchNav('withdraw')">
+            <div class="profile-action-squircle"><i class="fa-solid fa-money-bill-transfer"></i></div>
+            <div class="profile-action-label">Withdraw</div>
+          </div>
+          <div class="profile-action-btn" onclick="handleDownloadAPK()">
+            <div class="profile-action-squircle"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+            <div class="profile-action-label">APK</div>
+          </div>
+          <div class="profile-action-btn" onclick="openBankCardModal()">
+            <div class="profile-action-squircle"><i class="fa-solid fa-credit-card"></i></div>
+            <div class="profile-action-label">Bank Card</div>
+          </div>
+        </div>
+
+        <!-- More Services Section (Image 1) -->
+        <div class="services-section-header">
+          <h3 class="services-title">More services</h3>
+          <div class="services-underline"></div>
+        </div>
+
+        <div class="services-list-container">
+          <div class="service-card-item" onclick="openPersonalInfoModal()">
+            <div class="service-item-left">
+              <div class="service-squircle-icon"><i class="fa-solid fa-id-card"></i></div>
+              <div class="service-item-title">Personal Information</div>
+            </div>
+            <i class="fa-solid fa-chevron-right service-chevron"></i>
+          </div>
+
+          <div class="service-card-item" onclick="openHistoryModal('recharge')">
+            <div class="service-item-left">
+              <div class="service-squircle-icon"><i class="fa-solid fa-receipt"></i></div>
+              <div class="service-item-title">Balance Details</div>
+            </div>
+            <i class="fa-solid fa-chevron-right service-chevron"></i>
+          </div>
+
+          <div class="service-card-item" onclick="openHistoryModal('withdraw')">
+            <div class="service-item-left">
+              <div class="service-squircle-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+              <div class="service-item-title">Withdrawal Details</div>
+            </div>
+            <i class="fa-solid fa-chevron-right service-chevron"></i>
+          </div>
+
+          <div class="service-card-item" onclick="openNotificationsModal()">
+            <div class="service-item-left">
+              <div class="service-squircle-icon"><i class="fa-solid fa-bell"></i></div>
+              <div class="service-item-title">Notification Center</div>
+            </div>
+            <i class="fa-solid fa-chevron-right service-chevron"></i>
+          </div>
+
+          <div class="service-card-item" onclick="openBankCardModal()">
+            <div class="service-item-left">
+              <div class="service-squircle-icon"><i class="fa-solid fa-building-columns"></i></div>
+              <div class="service-item-title">My Bank & UPI Details</div>
+            </div>
+            <i class="fa-solid fa-chevron-right service-chevron"></i>
+          </div>
+
+          <div class="service-card-item" onclick="openSupportModal()">
+            <div class="service-item-left">
+              <div class="service-squircle-icon"><i class="fa-brands fa-telegram"></i></div>
+              <div class="service-item-title">Official Telegram & Support</div>
+            </div>
+            <i class="fa-solid fa-chevron-right service-chevron"></i>
+          </div>
+
+          <div class="service-card-item" onclick="handleLogout()">
+            <div class="service-item-left">
+              <div class="service-squircle-icon" style="background: #fee2e2; color: #ef4444;"><i class="fa-solid fa-right-from-bracket"></i></div>
+              <div class="service-item-title" style="color: #ef4444;">Log Out</div>
+            </div>
+            <i class="fa-solid fa-chevron-right service-chevron"></i>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================
+         FLOATING BOTTOM NAVIGATION BAR (FIXED)
+         With elevated circular Lucky Spin Wheel center!
+         ========================================== -->
+    <nav id="bottomNavBar" class="bottom-nav-bar">
+      <div id="navHome" class="nav-item active" onclick="switchNav('home')">
+        <div class="nav-icon"><i class="fa-solid fa-house"></i></div>
+        <div>Home</div>
+      </div>
+      <div id="navIncome" class="nav-item" onclick="switchNav('income')">
+        <div class="nav-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+        <div>Income</div>
+      </div>
+      <!-- Center elevated Lucky Spin Wheel button -->
+      <div class="nav-item-center" onclick="switchNav('task')">
+        <div class="nav-center-wheel">
+          <img src="/images/kingfisher_spin_wheel.jpg" alt="Spin Wheel Icon">
+        </div>
+        <div class="nav-center-label">Task</div>
+      </div>
+      <div id="navTeam" class="nav-item" onclick="switchNav('team')">
+        <div class="nav-icon"><i class="fa-solid fa-user-group"></i></div>
+        <div>Team</div>
+      </div>
+      <div id="navProfile" class="nav-item" onclick="switchNav('profile')">
+        <div class="nav-icon"><i class="fa-solid fa-circle-user"></i></div>
+        <div>Profile</div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ==========================================
+       MODALS
+       ========================================== -->
+
+  <!-- MODAL: PERSONAL INFORMATION -->
+  <div id="personalInfoModal" class="payment-modal-overlay">
+    <div class="payment-modal-card">
+      <div class="payment-modal-header">
+        <div class="payment-modal-title"><i class="fa-solid fa-id-card"></i> Personal Information</div>
+        <button class="btn-close-modal" onclick="closePersonalInfoModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="payment-modal-scroll">
+        <div class="info-row-box">
+          <span class="info-lbl">Full Name</span>
+          <strong id="modalUserName" class="info-val">Rahul Verma</strong>
+        </div>
+        <div class="info-row-box">
+          <span class="info-lbl">Registered Phone</span>
+          <strong id="modalUserPhone" class="info-val">+91 9876543210</strong>
+        </div>
+        <div class="info-row-box">
+          <span class="info-lbl">User ID</span>
+          <strong id="modalUserId" class="info-val" style="font-family: monospace;">u_demo</strong>
+        </div>
+        <div class="info-row-box">
+          <span class="info-lbl">Referral Code</span>
+          <strong id="modalRefCode" class="info-val" style="color: #651da9;">598823</strong>
+        </div>
+        <div class="info-row-box">
+          <span class="info-lbl">VIP Tier</span>
+          <strong class="info-val" style="color: #fbbf24;">VIP0 (Standard Bull)</strong>
+        </div>
+        <div class="info-row-box">
+          <span class="info-lbl">Account Status</span>
+          <strong class="info-val" style="color: #10b981;"><i class="fa-solid fa-circle-check"></i> Active & Verified</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: NOTIFICATIONS CENTER -->
+  <div id="notificationsModal" class="payment-modal-overlay">
+    <div class="payment-modal-card">
+      <div class="payment-modal-header">
+        <div class="payment-modal-title"><i class="fa-solid fa-bell"></i> Notification Center</div>
+        <button class="btn-close-modal" onclick="closeNotificationsModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="payment-modal-scroll">
+        <div class="notice-card-item">
+          <div class="notice-head">
+            <span class="notice-badge">Official</span>
+            <span class="notice-time">Today, 09:00 AM</span>
+          </div>
+          <div class="notice-title">🎉 Welcome to Kingfisher Capital Investment Portal</div>
+          <div class="notice-body">We are thrilled to launch the high-return official energy equipment financing program. Earn daily returns and enjoy 3-tier team referral commissions up to 40%!</div>
+        </div>
+        <div class="notice-card-item">
+          <div class="notice-head">
+            <span class="notice-badge" style="background: #d1fae5; color: #047857;">Payment</span>
+            <span class="notice-time">Daily 09:00 - 18:00</span>
+          </div>
+          <div class="notice-title">⚡ Instant UPI Recharge & Payouts Active</div>
+          <div class="notice-body">Recharge through UPI and submit your 12-digit UTR for automatic account credit. Withdrawals processed daily between 09:00 to 18:00.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: BANK DETAILS SETUP -->
+  <div id="bankModal" class="payment-modal-overlay">
+    <div class="payment-modal-card">
+      <div class="payment-modal-header">
+        <div class="payment-modal-title"><i class="fa-solid fa-building-columns"></i> Bank & UPI Binding</div>
+        <button class="btn-close-modal" onclick="closeBankModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="payment-modal-scroll">
+        <div class="auth-input-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #320761; margin-bottom: 4px; display: block;">Account Holder Name</label>
+          <div class="auth-input-wrapper">
+            <input type="text" id="setupAccountHolder" class="auth-input" placeholder="Full Name">
+          </div>
+        </div>
+        <div class="auth-input-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #320761; margin-bottom: 4px; display: block;">Bank Name</label>
+          <div class="auth-input-wrapper">
+            <input type="text" id="setupBankName" class="auth-input" placeholder="e.g. State Bank of India">
+          </div>
+        </div>
+        <div class="auth-input-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #320761; margin-bottom: 4px; display: block;">Account Number</label>
+          <div class="auth-input-wrapper">
+            <input type="text" id="setupAccountNumber" class="auth-input" placeholder="Bank Account Number">
+          </div>
+        </div>
+        <div class="auth-input-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #320761; margin-bottom: 4px; display: block;">IFSC Code</label>
+          <div class="auth-input-wrapper">
+            <input type="text" id="setupIfsc" class="auth-input" placeholder="e.g. SBIN0001234">
+          </div>
+        </div>
+        <div class="auth-input-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #320761; margin-bottom: 4px; display: block;">UPI ID</label>
+          <div class="auth-input-wrapper">
+            <input type="text" id="setupUpiId" class="auth-input" placeholder="e.g. mobile@upi">
+          </div>
+        </div>
+        <button class="btn-primary-purple" onclick="saveBankDetails()">
+          <span>Save Details</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: OFFICIAL SUPPORT -->
+  <div id="supportModal" class="payment-modal-overlay">
+    <div class="payment-modal-card">
+      <div class="payment-modal-header">
+        <div class="payment-modal-title"><i class="fa-solid fa-headset"></i> Customer Service & Telegram</div>
+        <button class="btn-close-modal" onclick="closeSupportModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="payment-modal-scroll" style="text-align: center; padding: 10px 0;">
+        <img src="/images/kingfisher_logo.jpg" alt="Support Logo" style="width: 72px; height: 72px; border-radius: 18px; margin: 0 auto 14px auto; display: block; border: 2px solid #5d1ca3;">
+        <h3 style="font-size: 17px; font-weight: 800; color: #27064d; margin-bottom: 6px;">24/7 Dedicated Support</h3>
+        <p style="font-size: 12.5px; color: #7d6b99; margin-bottom: 20px;">Join our official Telegram community for daily gift codes, recharge proofs and direct VIP assistance.</p>
+
+        <a id="supportTelegramLink" href="https://t.me/kingfisher_energy_vip" target="_blank" class="btn-primary-purple" style="text-decoration: none; margin-bottom: 12px; background: #229ed9;">
+          <i class="fa-brands fa-telegram"></i> <span>Join Official Telegram</span>
+        </a>
+
+        <a id="supportWhatsappLink" href="https://wa.me/919876543210" target="_blank" class="btn-primary-purple" style="text-decoration: none; background: #25d366;">
+          <i class="fa-brands fa-whatsapp"></i> <span>WhatsApp Support</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SETTINGS -->
+  <div id="settingsModal" class="payment-modal-overlay">
+    <div class="payment-modal-card">
+      <div class="payment-modal-header">
+        <div class="payment-modal-title"><i class="fa-solid fa-gear"></i> App Settings</div>
+        <button class="btn-close-modal" onclick="closeSettingsModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="payment-modal-scroll">
+        <div class="service-card-item" onclick="openBankCardModal()">
+          <div class="service-item-left">
+            <div class="service-squircle-icon"><i class="fa-solid fa-building-columns"></i></div>
+            <div class="service-item-title">Modify Bank Card</div>
+          </div>
+          <i class="fa-solid fa-chevron-right service-chevron"></i>
+        </div>
+        <div class="service-card-item" onclick="promptChangePassword()">
+          <div class="service-item-left">
+            <div class="service-squircle-icon"><i class="fa-solid fa-lock"></i></div>
+            <div class="service-item-title">Change Password</div>
+          </div>
+          <i class="fa-solid fa-chevron-right service-chevron"></i>
+        </div>
+        <div class="service-card-item" onclick="handleDownloadAPK()">
+          <div class="service-item-left">
+            <div class="service-squircle-icon"><i class="fa-solid fa-download"></i></div>
+            <div class="service-item-title">Download Android APK</div>
+          </div>
+          <i class="fa-solid fa-chevron-right service-chevron"></i>
+        </div>
+        <div class="service-card-item" style="border-top: 1px dashed #ebdffa; margin-top: 10px;">
+          <div class="service-item-left">
+            <div class="service-squircle-icon"><i class="fa-solid fa-code-branch"></i></div>
+            <div class="service-item-title">App Version: 2.0.0 Pro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RECORDS HISTORY -->
+  <div id="historyModal" class="payment-modal-overlay">
+    <div class="payment-modal-card">
+      <div class="payment-modal-header">
+        <div id="historyModalTitle" class="payment-modal-title">Transaction Records</div>
+        <button class="btn-close-modal" onclick="closeHistoryModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="payment-modal-scroll" id="historyModalList">
+        <!-- Loaded dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

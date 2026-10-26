@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kingfisher Capital - Master Admin Portal 2 2</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090306;
+      --card-bg: #16070a;
+      --card-border: #38121a;
+      --primary: #d90429;
+      --primary-hover: #ba181b;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Admin Top Navigation */
+    .admin-nav {
+      background: #120407;
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .admin-brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--primary);
+      object-fit: cover;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, #d90429, #f59e0b);
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .admin-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-portal-action {
+      background: #2a0a10;
+      color: #fde68a;
+      border: 1px solid #3b256b;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-portal-action:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Main Container */
+    .admin-container {
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 60px 20px;
+      flex: 1;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+    .stat-card.alert::before { background: var(--warning); }
+    .stat-card.danger::before { background: var(--danger); }
+    .stat-card.success::before { background: var(--success); }
+    .stat-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stat-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .stat-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Tabs Bar */
+    .tabs-bar {
+      display: flex;
+      gap: 8px;
+      background: #140d2b;
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      background: #0f0a20;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #fff;
+      font-size: 13px;
+      min-width: 240px;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+    .filter-select {
+      background: #0f0a20;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+    }
+
+    /* Admin Content Panels */
+    .admin-panel {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .admin-panel.active {
+      display: block;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .panel-title {
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Tables */
+    .table-responsive {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+    th {
+      background: #1c1438;
+      color: #fde68a;
+      font-weight: 700;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--card-border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      vertical-align: middle;
+    }
+    tr:hover td {
+      background: rgba(124, 58, 237, 0.05);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .badge.pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge.approved { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge.rejected { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .badge.banned { background: rgba(239, 68, 68, 0.3); color: #fca5a5; border: 1px solid #ef4444; }
+
+    /* Action Buttons in Table */
+    .btn-action-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .btn-table-action {
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: transform 0.1s;
+    }
+    .btn-table-action:active { transform: scale(0.95); }
+    .btn-table-action.approve { background: var(--success); color: #fff; }
+    .btn-table-action.reject { background: var(--danger); color: #fff; }
+    .btn-table-action.edit { background: #3b82f6; color: #fff; }
+    .btn-table-action.warn { background: var(--warning); color: #1c0334; }
+    .btn-table-action.secondary { background: #332356; color: #fde68a; }
+
+    /* Forms */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #fde68a;
+      margin-bottom: 6px;
+    }
+    .form-control {
+      width: 100%;
+      background: #0f0a20;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #fff;
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+    textarea.form-control {
+      resize: vertical;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .modal-title {
+      font-size: 17px;
+      font-weight: 800;
+    }
+    .btn-close-modal {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Toast */
+    #toastContainer {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast {
+      background: #1c1438;
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .toast.success { border-color: var(--success); }
+    .toast.error { border-color: var(--danger); }
+
+    /* Admin Auth Screen */
+    #adminAuthScreen {
+      position: fixed;
+      inset: 0;
+      background: #0b0716;
+      background-image: radial-gradient(circle at 50% 30%, #2f0b54 0%, #0b0716 100%);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .auth-box {
+      background: #150f28;
+      border: 1px solid #362263;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 400px;
+      padding: 32px 28px;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    }
+    .auth-box img {
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      border: 2px solid var(--primary);
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTH SCREEN -->
+  <div id="adminAuthScreen">
+    <div class="auth-box">
+      <img src="/images/kingfisher_logo.jpg" alt="Logo">
+      <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 6px;">Admin Master Access</h2>
+      <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 24px;">Enter administrator credentials to manage deposits, payouts and plans.</p>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div class="form-group" style="text-align: left;">
+          <label>Admin Username</label>
+          <input type="text" id="adminUser" class="form-control" placeholder="Enter Admin Username" autocomplete="username" required>
+        </div>
+        <div class="form-group" style="text-align: left; margin-bottom: 24px;">
+          <label>Password</label>
+          <input type="password" id="adminPass" class="form-control" placeholder="Enter Admin Password" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn-portal-action" style="width: 100%; justify-content: center; height: 44px; font-size: 14px; background: var(--primary); color: #fff;">
+          <i class="fa-solid fa-unlock-keyhole"></i> Authenticate & Enter
+        </button>
+      </form>
+      <div style="margin-top: 18px;">
+        <a href="/" style="font-size: 12px; color: var(--text-muted); text-decoration: none;"><i class="fa-solid fa-arrow-left"></i> Return to Client App</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP NAV -->
+  <nav class="admin-nav">
+    <div class="admin-brand">
+      <img src="/images/kingfisher_logo.jpg" alt="Logo">
+      <span>Kingfisher Investment</span>
+      <span class="brand-badge">ADMIN CONTROL</span>
+    </div>
+    <div class="admin-nav-actions">
+      <button class="btn-portal-action" onclick="exportData('recharges')">
+        <i class="fa-solid fa-file-arrow-down"></i> Export Deposits
+      </button>
+      <button class="btn-portal-action" onclick="exportData('withdrawals')">
+        <i class="fa-solid fa-file-arrow-down"></i> Export Payouts
+      </button>
+      <a href="/" class="btn-portal-action" target="_blank">
+        <i class="fa-solid fa-mobile-screen"></i> Client View
+      </a>
+      <button class="btn-portal-action" onclick="handleAdminLogout()" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #f87171;">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <div class="admin-container">
+    <!-- STATS OVERVIEW -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">Total Users <i class="fa-solid fa-users"></i></div>
+        <div id="admStatUsers" class="stat-value">0</div>
+        <div class="stat-sub">Registered investors</div>
+      </div>
+      <div class="stat-card alert">
+        <div class="stat-title">Pending Recharges <i class="fa-solid fa-wallet"></i></div>
+        <div id="admStatPendingRecharges" class="stat-value" style="color: #fbbf24;">0</div>
+        <div class="stat-sub">Needs verification</div>
+      </div>
+      <div class="stat-card danger">
+        <div class="stat-title">Pending Withdrawals <i class="fa-solid fa-money-bill-transfer"></i></div>
+        <div id="admStatPendingWithdrawals" class="stat-value" style="color: #f87171;">0</div>
+        <div class="stat-sub">Pending bank transfer</div>
+      </div>
+      <div class="stat-card success">
+        <div class="stat-title">Approved Deposits <i class="fa-solid fa-circle-check"></i></div>
+        <div id="admStatApprovedDeposit" class="stat-value" style="color: #34d399;">₹0</div>
+        <div class="stat-sub">Total capital collected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Server Uptime <i class="fa-solid fa-server"></i></div>
+        <div id="admStatUptime" class="stat-value" style="font-size: 20px; color: #fbbf24;">Active</div>
+        <div class="stat-sub" id="admStatServerTime">Render Cloud Ready</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" onclick="switchTab('recharges', this)">
+        <i class="fa-solid fa-receipt"></i> Recharge Verifications
+      </button>
+      <button class="tab-btn" onclick="switchTab('withdrawals', this)">
+        <i class="fa-solid fa-money-bill-wave"></i> Withdrawal Requests
+      </button>
+      <button class="tab-btn" onclick="switchTab('qr', this)">
+        <i class="fa-solid fa-qrcode"></i> UPI QR & Settings
+      </button>
+      <button class="tab-btn" onclick="switchTab('plans', this)">
+        <i class="fa-solid fa-layer-group"></i> Manage Plans
+      </button>
+      <button class="tab-btn" onclick="switchTab('users', this)">
+        <i class="fa-solid fa-user-gear"></i> Users & Balances
+      </button>
+      <button class="tab-btn" onclick="switchTab('manual', this)">
+        <i class="fa-solid fa-wallet"></i> Manual Credit / Debit
+      </button>
+      <button class="tab-btn" onclick="switchTab('analytics', this)">
+        <i class="fa-solid fa-chart-pie"></i> Platform Financials
+      </button>
+      <button class="tab-btn" onclick="switchTab('security', this)">
+        <i class="fa-solid fa-shield-halved"></i> Security & Backup
+      </button>
+    </div>
+
+    <!-- PANEL 1: RECHARGES -->
+    <div id="panel-recharges" class="admin-panel active">
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-receipt" style="color: var(--primary);"></i> Client Recharge Requests</div>
+        <button class="btn-portal-action" onclick="loadRecharges()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="filter-bar">
+        <input type="text" id="rechargeSearchInput" class="search-input" placeholder="Search phone, name or 12-digit UTR..." oninput="filterRechargesTable()">
+        <select id="rechargeStatusFilter" class="filter-select" onchange="filterRechargesTable()">
+          <option value="all">All Statuses</option>
+          <option value="pending" selected>Pending Verification</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Client / Phone</th>
+              <th>Amount</th>
+              <th>12-Digit UTR</th>
+              <th>Receipt</th>
+              <th>Submission Time</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="rechargeTableBody">
+            <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Loading recharges...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANEL 2: WITHDRAWALS -->
+    <div id="panel-withdrawals" class="admin-panel">
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-money-bill-wave" style="color: #f87171;"></i> Client Withdrawal Requests</div>
+        <button class="btn-portal-action" onclick="loadWithdrawals()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" id="withdrawSearchInput" class="search-input" placeholder="Search user phone or account number..." oninput="filterWithdrawalsTable()">
+        <select id="withdrawStatusFilter" class="filter-select" onchange="filterWithdrawalsTable()">
+          <option value="all">All Requests</option>
+          <option value="pending" selected>Pending Payout</option>
+          <option value="approved">Paid</option>
+          <option value="rejected">Refunded</option>
+        </select>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Amount / Fee</th>
+              <th>Net Payout</th>
+              <th>Bank & UPI Details</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="withdrawTableBody">
+            <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Loading withdrawals...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANEL 3: QR & SETTINGS -->
+    <div id="panel-qr" class="admin-panel">
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-qrcode" style="color: #34d399;"></i> Multi-QR Auto-Rotation Pool & Payment Settings</div>
+        <span style="font-size: 12px; color: #34d399;"><i class="fa-solid fa-bolt"></i> Real-time User Rotation Active</span>
+      </div>
+
+      <!-- POOL STATUS & INFO CARD -->
+      <div style="background: linear-gradient(135deg, #1f143d 0%, #170d30 100%); border: 1px solid #4a2d80; border-radius: 16px; padding: 20px; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="badge approved" style="font-size: 11px; padding: 6px 12px;"><i class="fa-solid fa-check-circle"></i> AUTO-ROTATION ACTIVE</span>
+            <span style="font-size: 13px; color: #fff; font-weight: 700;">Multi-QR System Online</span>
+          </div>
+          <div style="display: flex; gap: 12px;">
+            <div style="background: #2b1754; padding: 6px 14px; border-radius: 10px; font-size: 12px; color: #fde68a; border: 1px solid #4f2887;">
+              Total QRs in Pool: <strong id="qrStatTotal" style="color: #fff; font-size: 14px;">5</strong>
+            </div>
+            <div style="background: #11382b; padding: 6px 14px; border-radius: 10px; font-size: 12px; color: #6ee7b7; border: 1px solid #059669;">
+              Active in Rotation: <strong id="qrStatActive" style="color: #fff; font-size: 14px;">5</strong>
+            </div>
+          </div>
+        </div>
+        <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.6; margin: 0;">
+          ⚡ <strong>Rotation Mechanism:</strong> Alag-alag users ko automatically alag-alag QR code serve hota hai (Round-Robin). Agar kisi bank ya UPI me limit reach ho jaye, to client screen par user <strong>"Change QR / Refresh"</strong> button daba kar agla QR le sakta hai bina kisi interruption ke!
+        </p>
+      </div>
+
+      <!-- BATCH UPLOAD CARD (MIN 5 QR) -->
+      <div style="background: #1c1438; border: 1px solid #3c2a78; border-radius: 16px; padding: 22px; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <h3 style="font-size: 15px; font-weight: 800; color: #34d399; margin: 0; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Batch Upload Multiple QR Codes (5+ Ek Saath)
+            </h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">PhonePe, GPay, Paytm ke 5 ya zyada QR files select karein aur ek click me rotation pool me add karein.</p>
+          </div>
+          <span style="background: #3b1d70; color: #fde68a; font-size: 11px; padding: 4px 10px; border-radius: 8px; font-weight: 700;">
+            Minimum 5 Supported
+          </span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 14px;">
+          <div>
+            <label style="font-size: 12px; color: #fde68a; font-weight: 700; display: block; margin-bottom: 6px;">Select QR Images (Multiple)</label>
+            <input type="file" id="batchQrInput" accept="image/*" multiple class="form-control" onchange="previewBatchQrs(this)">
+          </div>
+          <div>
+            <label style="font-size: 12px; color: #fde68a; font-weight: 700; display: block; margin-bottom: 6px;">Channel Name Prefix (Optional)</label>
+            <input type="text" id="batchQrTitle" class="form-control" placeholder="e.g. VIP Instant Pay">
+          </div>
+          <div>
+            <label style="font-size: 12px; color: #fde68a; font-weight: 700; display: block; margin-bottom: 6px;">Custom UPI ID for these (Optional)</label>
+            <input type="text" id="batchQrUpi" class="form-control" placeholder="Leave empty for default UPI">
+          </div>
+        </div>
+
+        <!-- Selected Files Pre-Upload Preview -->
+        <div id="batchPreUploadPreview" style="display: none; margin-bottom: 14px; background: #130c29; padding: 12px; border-radius: 12px; border: 1px dashed #6343ad;">
+          <div style="font-size: 12px; font-weight: 700; color: #a78bfa; margin-bottom: 8px;">Selected Files Preview (<span id="batchCountBadge">0</span> images selected):</div>
+          <div id="batchThumbnailsRow" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+        </div>
+
+        <button type="button" class="btn-portal-action" id="btnUploadBatch" onclick="uploadBatchQrs()" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; height: 42px; font-weight: 700; font-size: 13.5px;">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Upload All Selected QRs to Pool Now
+        </button>
+      </div>
+
+      <!-- LIVE QR POOL TABLE / GRID -->
+      <div style="background: #1c1438; border: 1px solid var(--card-border); border-radius: 16px; padding: 22px; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-arrows-spin" style="color: #fbbf24;"></i> Current QR Codes in Rotation Pool
+            </h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">Yahan sabhi active QRs hain jo users ko rotate hokar show hote hain. Aap kisi bhi QR ko pause, delete, ya primary bana sakte hain.</p>
+          </div>
+          <button type="button" class="btn-portal-action" onclick="loadQrCodesPool()" style="background: #2c1b52; color: #fde68a; height: 34px; font-size: 12px;">
+            <i class="fa-solid fa-rotate"></i> Refresh List
+          </button>
+        </div>
+
+        <div id="qrCodesListContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+          <!-- Dynamically populated by loadQrCodesPool() -->
+          <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading QR pool...</div>
+        </div>
+      </div>
+
+      <!-- GLOBAL MERCHANT PAYMENT SETTINGS FORM -->
+      <div style="background: #1c1438; border: 1px solid var(--card-border); border-radius: 16px; padding: 22px; margin-bottom: 24px;">
+        <h3 style="font-size: 16px; font-weight: 800; color: #fff; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-sliders" style="color: #38bdf8;"></i> Global Merchant UPI & Limits Settings
+        </h3>
+
+        <form id="qrSettingsForm" onsubmit="saveQRSettings(event)">
+          <!-- Live Primary QR Preview & Single Upload -->
+          <div style="display: flex; gap: 24px; align-items: flex-start; margin-bottom: 24px; background: #150e2d; padding: 18px; border-radius: 14px; border: 1px solid #33225e; flex-wrap: wrap;">
+            <div style="text-align: center;">
+              <div style="font-size: 11px; font-weight: 700; color: #fde68a; margin-bottom: 6px;">Primary QR Preview</div>
+              <img id="adminQrPreview" src="/images/kingfisher_upi_qr.jpg" alt="UPI QR" style="width: 130px; height: 130px; border-radius: 12px; background: #fff; object-fit: contain; border: 2px solid var(--primary); padding: 4px;">
+              <div id="activeQrStatusBadge" style="margin-top: 6px;"><span class="badge approved" style="font-size: 10px;">PRIMARY ACTIVE</span></div>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+              <label style="font-size: 13px; font-weight: 700; color: #fff; display: block; margin-bottom: 6px;">Quick Single QR Upload</label>
+              <div style="display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+                <input type="file" id="qrFileInput" accept="image/*" class="form-control" style="flex: 1; min-width: 200px;" onchange="previewUploadedQr(this)">
+                <button type="button" class="btn-portal-action" onclick="uploadQrImmediately()" style="background: #10b981; color: #fff; white-space: nowrap; height: 42px;">
+                  <i class="fa-solid fa-cloud-arrow-up"></i> Upload Single QR
+                </button>
+              </div>
+              <div style="font-size: 11px; color: #fde68a; margin-bottom: 10px; background: #261b4d; padding: 6px 10px; border-radius: 8px; border: 1px solid #3c2a78; word-break: break-all;">
+                <span id="activeQrPathText">Current Active: /uploads/...</span>
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 12px;">Or Direct Image URL (Optional)</label>
+                <input type="text" id="settingQrUrl" class="form-control" placeholder="https://... or /images/..." oninput="document.getElementById('adminQrPreview').src = this.value">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Default Merchant UPI ID (VPA) *</label>
+              <input type="text" id="settingUpiId" class="form-control" placeholder="e.g. merchant@okhdfcbank" required>
+            </div>
+            <div class="form-group">
+              <label>Merchant Business Name *</label>
+              <input type="text" id="settingMerchantName" class="form-control" placeholder="e.g. RED BULL VENTURES PVT LTD" required>
+            </div>
+            <div class="form-group">
+              <label>Minimum Recharge Amount (₹) *</label>
+              <input type="number" id="settingMinRecharge" class="form-control" value="285" required>
+            </div>
+            <div class="form-group">
+              <label>Minimum Withdrawal Amount (₹) *</label>
+              <input type="number" id="settingMinWithdraw" class="form-control" value="200" required>
+            </div>
+            <div class="form-group">
+              <label>Withdrawal Processing Fee (%) *</label>
+              <input type="number" id="settingFeePercent" class="form-control" value="10" required>
+            </div>
+            <div class="form-group">
+              <label>Official Telegram Channel Link</label>
+              <input type="url" id="settingTelegram" class="form-control" placeholder="https://t.me/...">
+            </div>
+            <div class="form-group">
+              <label>Support WhatsApp Number</label>
+              <input type="text" id="settingWhatsapp" class="form-control" placeholder="+919876543210">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>App Notice / Announcement Marquee Ticker</label>
+            <textarea id="settingAnnouncement" class="form-control" rows="2" placeholder="Announcements shown on the client home screen..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-portal-action" style="background: var(--primary); color: #fff; height: 46px; padding: 0 28px; font-size: 14px;">
+            <i class="fa-solid fa-floppy-disk"></i> Save & Broadcast Payment Settings
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- PANEL 4: PLANS -->
+    <div id="panel-plans" class="admin-panel">
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-layer-group" style="color: #fbbf24;"></i> Investment Plans Management</div>
+        <button class="btn-portal-action" onclick="openCreatePlanModal()" style="background: var(--primary); color: #fff;">
+          <i class="fa-solid fa-plus"></i> Add New Plan
+        </button>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Plan Title</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Daily Return</th>
+              <th>Total Return</th>
+              <th>Cycle</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="plansTableBody">
+            <tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Loading plans...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANEL 5: USERS -->
+    <div id="panel-users" class="admin-panel">
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-user-gear" style="color: #ec4899;"></i> Registered Users & Wallets</div>
+        <button class="btn-portal-action" onclick="loadUsers()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" id="userSearchInput" class="search-input" placeholder="Search user phone, name, or invite code..." oninput="filterUsersTable()">
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Available Balance</th>
+              <th>Total Recharged</th>
+              <th>Total Withdrawn</th>
+              <th>Status</th>
+              <th>Referral Code</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">Loading users...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANEL 6: MANUAL CREDIT / DEBIT -->
+    <div id="panel-manual" class="admin-panel">
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-wallet" style="color: #f59e0b;"></i> Manual User Credit & Debit Management</div>
+        <span style="font-size: 12px; color: var(--text-muted);">Directly adjust user wallet with complete transaction audit trail</span>
+      </div>
+
+      <div style="background: #1c1438; border: 1px solid var(--card-border); border-radius: 16px; padding: 24px; max-width: 650px; margin-bottom: 30px;">
+        <form id="manualTxForm" onsubmit="handleManualTransaction(event)">
+          <div class="form-group">
+            <label>User Registered Phone Number *</label>
+            <input type="text" id="manualUserPhone" class="form-control" placeholder="e.g. 9876543210" required>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Transaction Type *</label>
+              <select id="manualTxType" class="form-control" required>
+                <option value="recharge">Credit (+ Add Money to Wallet)</option>
+                <option value="withdrawal">Debit (- Deduct Money from Wallet)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Amount (₹) *</label>
+              <input type="number" id="manualTxAmount" class="form-control" placeholder="e.g. 500" min="1" step="0.01" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Reason / Audit Note *</label>
+            <input type="text" id="manualTxReason" class="form-control" placeholder="e.g. Offline Cash Received / Compensation Bonus / Settlement" required>
+          </div>
+
+          <button type="submit" class="btn-portal-action" style="background: #f59e0b; color: #1e1136; font-weight: 700; height: 44px; padding: 0 24px;">
+            <i class="fa-solid fa-check"></i> Execute Balance Adjustment
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- PANEL 7: PLATFORM FINANCIALS & REPORTING -->
+    <div id="panel-analytics" class="admin-panel">
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-chart-pie" style="color: #06b6d4;"></i> Platform Financials & Data Export</div>
+        <button class="btn-portal-action" onclick="loadFinancialAnalytics()"><i class="fa-solid fa-rotate"></i> Refresh Analytics</button>
+      </div>
+
+      <div class="stats-grid" style="margin-bottom: 24px;">
+        <div class="stat-card">
+          <div class="stat-label">Total Deposits Approved</div>
+          <div id="finApprovedDeposits" class="stat-value" style="color: #34d399;">₹0.00</div>
+          <div class="stat-sub">Lifetime Credited Volume</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Payouts Settled</div>
+          <div id="finApprovedWithdrawals" class="stat-value" style="color: #f43f5e;">₹0.00</div>
+          <div class="stat-sub">Lifetime Paid Out</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Net Platform Float / Surplus</div>
+          <div id="finNetReserve" class="stat-value" style="color: #38bdf8;">₹0.00</div>
+          <div class="stat-sub">Deposits minus Withdrawals</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending Verifications</div>
+          <div id="finPendingVolume" class="stat-value" style="color: #f59e0b;">0 Req</div>
+          <div class="stat-sub">Needs Admin Attention</div>
+        </div>
+      </div>
+
+      <div class="card-white-rounded" style="background: #1c1438; border: 1px solid var(--card-border); padding: 24px; border-radius: 16px;">
+        <h4 style="color: #fff; margin-bottom: 12px; font-size: 16px;"><i class="fa-solid fa-file-csv" style="color: #34d399;"></i> One-Click Data Export (CSV & JSON)</h4>
+        <p style="color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 18px;">
+          Export platform transaction ledgers, member accounts, and payment logs for Excel, Google Sheets, or accountant audits.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="/api/admin/export-csv/recharges" class="btn-portal-action" style="background: #2a0a10; border: 1px solid #d8b4fe; color: #fff;">
+            <i class="fa-solid fa-download"></i> Export Recharges (CSV)
+          </a>
+          <a href="/api/admin/export-csv/withdrawals" class="btn-portal-action" style="background: #2a0a10; border: 1px solid #d8b4fe; color: #fff;">
+            <i class="fa-solid fa-download"></i> Export Withdrawals (CSV)
+          </a>
+          <a href="/api/admin/export-csv/users" class="btn-portal-action" style="background: #2a0a10; border: 1px solid #d8b4fe; color: #fff;">
+            <i class="fa-solid fa-download"></i> Export Users (CSV)
+          </a>
+          <a href="/api/admin/backup/db" class="btn-portal-action" style="background: var(--primary); color: #fff;">
+            <i class="fa-solid fa-database"></i> Download Full Database Backup (.json)
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 8: SECURITY & SETTINGS -->
+    <div id="panel-security" class="admin-panel">
+      <div class="panel-header">
+        <div class="panel-title"><i class="fa-solid fa-shield-halved" style="color: #8b5cf6;"></i> Security, Credentials & Cloud Health</div>
+        <span style="font-size: 12px; color: #34d399;"><i class="fa-solid fa-circle-check"></i> SSL / HTTPS Secured</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+        <!-- Change Password Box -->
+        <div style="background: #1c1438; border: 1px solid var(--card-border); border-radius: 16px; padding: 24px;">
+          <h4 style="color: #fff; margin-bottom: 14px; font-size: 15px;"><i class="fa-solid fa-key" style="color: #fde68a;"></i> Change Admin Login Credentials</h4>
+          <form id="changeAdminPassForm" onsubmit="handleChangeAdminPassword(event)">
+            <div class="form-group">
+              <label>Current Admin Password *</label>
+              <input type="password" id="currentAdminPass" class="form-control" placeholder="Enter current password" required>
+            </div>
+            <div class="form-group">
+              <label>New Username (Optional)</label>
+              <input type="text" id="newAdminUsername" class="form-control" placeholder="Leave blank to keep current">
+            </div>
+            <div class="form-group">
+              <label>New Password * (Min 4 chars)</label>
+              <input type="password" id="newAdminPass" class="form-control" placeholder="Enter new strong password" required minlength="4">
+            </div>
+            <button type="submit" class="btn-portal-action" style="background: var(--primary); color: #fff; width: 100%;">
+              <i class="fa-solid fa-lock"></i> Update Admin Password
+            </button>
+          </form>
+        </div>
+
+        <!-- System & Render Health Box -->
+        <div style="background: #1c1438; border: 1px solid var(--card-border); border-radius: 16px; padding: 24px;">
+          <h4 style="color: #fff; margin-bottom: 14px; font-size: 15px;"><i class="fa-solid fa-server" style="color: #34d399;"></i> Render Cloud Uptime & Keep-Alive</h4>
+          <div style="font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+            <div><strong>Deployment Port:</strong> <code>0.0.0.0:$PORT</code></div>
+            <div><strong>Active Keep-Alive:</strong> Auto pinging every 10 min to prevent sleep</div>
+            <div><strong>Database File:</strong> <code>data/db.json</code> (Persistent)</div>
+            <div><strong>Public Uploads:</strong> <code>public/uploads/</code> (Serving QR & Proofs)</div>
+            <div><strong>API Health URL:</strong> <a href="/health" target="_blank" style="color: #38bdf8;">/health (200 OK)</a></div>
+          </div>
+          <div style="margin-top: 20px;">
+            <button class="btn-portal-action" onclick="checkServerHealth(); showToast('Health check verified!');" style="background: #2a0a10; border: 1px solid #34d399; color: #34d399;">
+              <i class="fa-solid fa-heart-pulse"></i> Ping Server Health
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT PLAN -->
+  <div id="planModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title" id="planModalTitle">Add New Investment Plan</div>
+        <button class="btn-close-modal" onclick="closePlanModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="planForm" onsubmit="savePlan(event)">
+        <input type="hidden" id="planEditId">
+        <div class="form-group">
+          <label>Plan Title</label>
+          <input type="text" id="planTitle" class="form-control" placeholder="e.g. Product G – Daily Return" required>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="planCategory" class="form-control">
+            <option value="normal">Normal Plan</option>
+            <option value="vip">VIP Plan</option>
+          </select>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Price (₹)</label>
+            <input type="number" id="planPrice" class="form-control" required oninput="calcPlanTotal()">
+          </div>
+          <div class="form-group">
+            <label>Daily Income (₹)</label>
+            <input type="number" id="planDaily" class="form-control" required oninput="calcPlanTotal()">
+          </div>
+          <div class="form-group">
+            <label>Cycle Days</label>
+            <input type="number" id="planCycle" class="form-control" value="2" required oninput="calcPlanTotal()">
+          </div>
+          <div class="form-group">
+            <label>Total Income (₹)</label>
+            <input type="number" id="planTotal" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Purchase Limit (Max per user)</label>
+          <input type="number" id="planLimit" class="form-control" value="10">
+        </div>
+        <div class="form-group">
+          <label>Plan Image (Upload file)</label>
+          <input type="file" id="planImageFile" class="form-control" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label>Or Select Preset Image</label>
+          <select id="planPresetSelect" class="form-control" onchange="if (this.value) document.getElementById('planImageFile').value=''">
+            <option value="">-- Custom Upload --</option>
+            <option value="/images/kingfisher_plan_offer.jpg">Kingfisher Offer Pack</option>
+            <option value="/images/kingfisher_plan_a.jpg">Kingfisher Product A</option>
+            <option value="/images/kingfisher_plan_c.jpg">Kingfisher Product C</option>
+            <option value="/images/kingfisher_plan_d.jpg">Kingfisher Product D</option>
+            <option value="/images/kingfisher_plan_f.jpg">Kingfisher Product F</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-portal-action" style="width: 100%; justify-content: center; height: 44px; background: var(--primary); color: #fff; margin-top: 10px;">
+          <i class="fa-solid fa-check"></i> Save Plan
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADJUST USER BALANCE -->
+  <div id="balanceModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">Manual Balance Adjustment</div>
+        <button class="btn-close-modal" onclick="closeBalanceModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="balanceForm" onsubmit="submitBalanceAdjust(event)">
+        <input type="hidden" id="adjUserId">
+        <p id="adjUserInfo" style="font-size: 13.5px; color: #fde68a; margin-bottom: 16px;"></p>
+        <div class="form-group">
+          <label>Adjustment Type</label>
+          <select id="adjType" class="form-control">
+            <option value="add">Add Balance (+) Credit</option>
+            <option value="deduct">Deduct Balance (-) Debit</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Amount (₹)</label>
+          <input type="number" id="adjAmount" class="form-control" placeholder="Enter amount" required min="1">
+        </div>
+        <button type="submit" class="btn-portal-action" style="width: 100%; justify-content: center; height: 44px; background: var(--primary); color: #fff;">
+          <i class="fa-solid fa-wallet"></i> Confirm Adjustment
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: IMAGE PREVIEW -->
+  <div id="imagePreviewModal" class="modal-overlay">
+    <div class="modal-box" style="text-align: center; max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">Payment Proof Preview</div>
+        <button class="btn-close-modal" onclick="document.getElementById('imagePreviewModal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <img id="modalPreviewImg" src="" alt="Proof" style="max-width: 100%; max-height: 60vh; border-radius: 12px; object-fit: contain; background: #fff;">
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer"></div>
+
+  <script>
+    let adminToken = localStorage.getItem('kingfisher_admin_token');
+    let allRecharges = [];
+    let allWithdrawals = [];
+    let allUsers = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (adminToken) {
+        document.getElementById('adminAuthScreen').style.display = 'none';
+        initAdminData();
+      } else {
+        document.getElementById('adminAuthScreen').style.display = 'flex';
+      }
+    });
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('adminUser').value;
+      const p = document.getElementById('adminPass').value;
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: u, password: p })
+        });
+        const data = await res.json();
+        if (data.success) {
+          adminToken = data.token;
+          localStorage.setItem('kingfisher_admin_token', adminToken);
+          document.getElementById('adminAuthScreen').style.display = 'none';
+          showToast('Welcome, Administrator!', 'success');
+          initAdminData();
+        } else {
+          showToast(data.message || 'Login failed', 'error');
+        }
+      } catch (err) {
+        showToast('Server connection error', 'error');
+      }
+    }
+
+    function handleAdminLogout() {
+      localStorage.removeItem('kingfisher_admin_token');
+      location.reload();
+    }
+
+    function showToast(msg, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i> <span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + tabId).classList.add('active');
+      if (tabId === 'qr') {
+        loadSettings();
+        loadQrCodesPool();
+      }
+    }
+
+    async function initAdminData() {
+      loadStats();
+      loadRecharges();
+      loadWithdrawals();
+      loadSettings();
+      loadQrCodesPool();
+      loadPlans();
+      loadUsers();
+      loadFinancialAnalytics();
+      checkServerHealth();
+    }
+
+    async function checkServerHealth() {
+      try {
+        const res = await fetch('/health');
+        const d = await res.json();
+        if (d.status === 'ok') {
+          document.getElementById('admStatUptime').innerText = d.uptime || 'Active';
+          document.getElementById('admStatServerTime').innerText = d.serverTime || 'Render Cloud Ready';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/admin/stats');
+        const data = await res.json();
+        if (data.success) {
+          const s = data.stats;
+          document.getElementById('admStatUsers').innerText = s.totalUsers;
+          document.getElementById('admStatPendingRecharges').innerText = s.pendingRecharges;
+          document.getElementById('admStatPendingWithdrawals').innerText = s.pendingWithdrawals;
+          document.getElementById('admStatApprovedDeposit').innerText = '₹' + Number(s.totalRecharge).toLocaleString('en-IN');
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Recharges
+    async function loadRecharges() {
+      const tbody = document.getElementById('rechargeTableBody');
+      try {
+        const res = await fetch('/api/admin/recharges');
+        const data = await res.json();
+        if (data.success) {
+          allRecharges = (data.recharges || []).reverse();
+          renderRechargesTable(allRecharges);
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color: red; text-align: center;">Error loading recharges</td></tr>';
+      }
+    }
+
+    function filterRechargesTable() {
+      const q = (document.getElementById('rechargeSearchInput').value || '').toLowerCase().trim();
+      const status = document.getElementById('rechargeStatusFilter').value;
+
+      const filtered = allRecharges.filter(r => {
+        const matchesStatus = status === 'all' || r.status === status;
+        const matchesQuery = !q || 
+          (r.user_phone && r.user_phone.includes(q)) || 
+          (r.user_name && r.user_name.toLowerCase().includes(q)) || 
+          (r.utr && r.utr.toLowerCase().includes(q));
+        return matchesStatus && matchesQuery;
+      });
+
+      renderRechargesTable(filtered);
+    }
+
+    function renderRechargesTable(recs) {
+      const tbody = document.getElementById('rechargeTableBody');
+      tbody.innerHTML = '';
+      if (recs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No matching recharge records.</td></tr>';
+        return;
+      }
+      recs.forEach(r => {
+        const tr = document.createElement('tr');
+        const statusBadge = r.status === 'approved' 
+          ? '<span class="badge approved">Approved</span>' 
+          : (r.status === 'rejected' ? '<span class="badge rejected">Rejected</span>' : '<span class="badge pending">Pending</span>');
+        
+        let actions = '-';
+        if (r.status === 'pending') {
+          actions = `
+            <div class="btn-action-group">
+              <button class="btn-table-action approve" onclick="approveRecharge('${r.id}')"><i class="fa-solid fa-check"></i> Approve</button>
+              <button class="btn-table-action reject" onclick="rejectRecharge('${r.id}')"><i class="fa-solid fa-xmark"></i> Reject</button>
+            </div>
+          `;
+        }
+
+        const dateStr = r.date ? new Date(r.date).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : '-';
+        const receiptBtn = r.screenshot ? `<button class="btn-table-action secondary" onclick="viewProof('${r.screenshot}')"><i class="fa-solid fa-image"></i> View</button>` : '-';
+
+        tr.innerHTML = `
+          <td><strong>${r.user_name || 'Client'}</strong><br><span style="color: var(--text-muted); font-size: 12px;">+91 ${r.user_phone || ''}</span></td>
+          <td style="font-weight: 800; color: #34d399; font-size: 15px;">₹${r.amount}</td>
+          <td><span style="font-family: monospace; background: #2a0a10; padding: 4px 8px; border-radius: 6px; font-weight: 700; color: #fde68a;">${r.utr || 'N/A'}</span></td>
+          <td>${receiptBtn}</td>
+          <td style="font-size: 12px; color: var(--text-muted);">${dateStr}</td>
+          <td>${statusBadge}</td>
+          <td>${actions}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function viewProof(url) {
+      document.getElementById('modalPreviewImg').src = url;
+      document.getElementById('imagePreviewModal').classList.add('active');
+    }
+
+    async function approveRecharge(id) {
+      if (!confirm('Approve this recharge? User wallet balance will be credited immediately.')) return;
+      try {
+        const res = await fetch(`/api/admin/recharge/${id}/approve`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          loadRecharges();
+          loadStats();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error approving recharge', 'error');
+      }
+    }
+
+    async function rejectRecharge(id) {
+      const reason = prompt('Enter rejection reason (e.g. Invalid UTR / Payment not received):', 'Invalid UTR');
+      if (reason === null) return;
+      try {
+        const res = await fetch(`/api/admin/recharge/${id}/reject`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reason })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Recharge marked rejected', 'success');
+          loadRecharges();
+          loadStats();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error rejecting recharge', 'error');
+      }
+    }
+
+    // Withdrawals
+    async function loadWithdrawals() {
+      const tbody = document.getElementById('withdrawTableBody');
+      try {
+        const res = await fetch('/api/admin/withdrawals');
+        const data = await res.json();
+        if (data.success) {
+          allWithdrawals = (data.withdrawals || []).reverse();
+          renderWithdrawalsTable(allWithdrawals);
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color: red; text-align: center;">Error loading withdrawals</td></tr>';
+      }
+    }
+
+    function filterWithdrawalsTable() {
+      const q = (document.getElementById('withdrawSearchInput').value || '').toLowerCase().trim();
+      const status = document.getElementById('withdrawStatusFilter').value;
+
+      const filtered = allWithdrawals.filter(w => {
+        const matchesStatus = status === 'all' || w.status === status;
+        const bank = w.bank_account || {};
+        const matchesQuery = !q || 
+          (w.user_phone && w.user_phone.includes(q)) || 
+          (w.user_name && w.user_name.toLowerCase().includes(q)) || 
+          (bank.account_number && bank.account_number.includes(q)) ||
+          (bank.upi_id && bank.upi_id.toLowerCase().includes(q));
+        return matchesStatus && matchesQuery;
+      });
+
+      renderWithdrawalsTable(filtered);
+    }
+
+    function renderWithdrawalsTable(wds) {
+      const tbody = document.getElementById('withdrawTableBody');
+      tbody.innerHTML = '';
+      if (wds.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No matching withdrawal records.</td></tr>';
+        return;
+      }
+      wds.forEach(w => {
+        const tr = document.createElement('tr');
+        const statusBadge = w.status === 'approved' 
+          ? '<span class="badge approved">Paid</span>' 
+          : (w.status === 'rejected' ? '<span class="badge rejected">Refunded</span>' : '<span class="badge pending">Pending</span>');
+        
+        let actions = '-';
+        if (w.status === 'pending') {
+          actions = `
+            <div class="btn-action-group">
+              <button class="btn-table-action approve" onclick="approveWithdrawal('${w.id}')"><i class="fa-solid fa-check"></i> Mark Paid</button>
+              <button class="btn-table-action reject" onclick="rejectWithdrawal('${w.id}')"><i class="fa-solid fa-xmark"></i> Reject</button>
+            </div>
+          `;
+        }
+
+        const bank = w.bank_account || {};
+        const bankDetails = `
+          <div style="font-size: 12px; line-height: 1.4;">
+            <div><strong>A/C:</strong> ${bank.account_number || 'N/A'}</div>
+            <div><strong>IFSC:</strong> ${bank.ifsc || 'N/A'} | <strong>Bank:</strong> ${bank.bank_name || 'N/A'}</div>
+            <div><strong>Holder:</strong> ${bank.account_holder || 'N/A'}</div>
+            ${bank.upi_id ? `<div><strong>UPI:</strong> <span style="color: #fbbf24;">${bank.upi_id}</span></div>` : ''}
+          </div>
+        `;
+
+        const dateStr = w.date ? new Date(w.date).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : '-';
+        tr.innerHTML = `
+          <td><strong>${w.user_name || 'User'}</strong><br><span style="color: var(--text-muted); font-size: 12px;">+91 ${w.user_phone || ''}</span></td>
+          <td>₹${w.amount} <span style="color: var(--text-muted); font-size: 11px;">(Fee: ₹${w.fee})</span></td>
+          <td style="font-weight: 800; color: #34d399; font-size: 15px;">₹${w.final_amount}</td>
+          <td>${bankDetails}</td>
+          <td style="font-size: 12px; color: var(--text-muted);">${dateStr}</td>
+          <td>${statusBadge}</td>
+          <td>${actions}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function approveWithdrawal(id) {
+      if (!confirm('Mark this withdrawal as Paid? Confirm you have transferred funds to user bank account.')) return;
+      try {
+        const res = await fetch(`/api/admin/withdrawal/${id}/approve`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          loadWithdrawals();
+          loadStats();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error approving withdrawal', 'error');
+      }
+    }
+
+    async function rejectWithdrawal(id) {
+      const reason = prompt('Enter rejection reason (User balance will be refunded automatically):', 'Incorrect bank IFSC code');
+      if (reason === null) return;
+      try {
+        const res = await fetch(`/api/admin/withdrawal/${id}/reject`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reason })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          loadWithdrawals();
+          loadStats();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error rejecting withdrawal', 'error');
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function escapeAttr(str) {
+      if (!str) return '';
+      return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    // Multi-QR Pool & Auto-Rotation Management
+    let adminQrPool = [];
+
+    function previewBatchQrs(input) {
+      const container = document.getElementById('batchPreUploadPreview');
+      const row = document.getElementById('batchThumbnailsRow');
+      const countBadge = document.getElementById('batchCountBadge');
+      if (!input.files || input.files.length === 0) {
+        if (container) container.style.display = 'none';
+        return;
+      }
+      container.style.display = 'block';
+      countBadge.innerText = input.files.length;
+      row.innerHTML = '';
+
+      Array.from(input.files).forEach((file, idx) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const div = document.createElement('div');
+          div.style.cssText = 'position: relative; text-align: center; background: #1c1438; border: 1px solid #4a2d80; border-radius: 8px; padding: 4px;';
+          div.innerHTML = `
+            <img src="${e.target.result}" style="width: 55px; height: 55px; border-radius: 6px; object-fit: contain; background: #fff;">
+            <div style="font-size: 9.5px; color: #cbd5e1; max-width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px;">#${idx+1}</div>
+          `;
+          row.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadBatchQrs() {
+      const fileInput = document.getElementById('batchQrInput');
+      if (!fileInput.files || fileInput.files.length === 0) {
+        showToast('Please select at least 1 QR image file (5+ recommended)!', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btnUploadBatch');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading ${fileInput.files.length} QR files...`;
+      btn.disabled = true;
+
+      const formData = new FormData();
+      Array.from(fileInput.files).forEach(f => {
+        formData.append('qr_files', f);
+      });
+      const titlePrefix = document.getElementById('batchQrTitle').value;
+      if (titlePrefix) formData.append('title', titlePrefix);
+      const customUpi = document.getElementById('batchQrUpi').value;
+      if (customUpi) formData.append('upi_id', customUpi);
+
+      try {
+        const res = await fetch('/api/admin/settings/upload-multiple-qrs', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`✅ ${data.added_count} QR Code(s) added to rotation pool!`, 'success');
+          fileInput.value = '';
+          document.getElementById('batchPreUploadPreview').style.display = 'none';
+          document.getElementById('batchThumbnailsRow').innerHTML = '';
+          loadQrCodesPool();
+          loadSettings();
+        } else {
+          showToast(data.message || 'Upload failed', 'error');
+        }
+      } catch (e) {
+        showToast('Server error uploading QR files', 'error');
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    async function loadQrCodesPool() {
+      const container = document.getElementById('qrCodesListContainer');
+      if (!container) return;
+
+      try {
+        const res = await fetch(`/api/admin/settings/qr-codes?t=${Date.now()}`);
+        const data = await res.json();
+        if (data.success) {
+          adminQrPool = data.qr_codes || [];
+          const activeCount = data.active_count || 0;
+          const totalCount = data.total || adminQrPool.length;
+
+          const statTotal = document.getElementById('qrStatTotal');
+          if (statTotal) statTotal.innerText = totalCount;
+          const statActive = document.getElementById('qrStatActive');
+          if (statActive) statActive.innerText = activeCount;
+
+          if (adminQrPool.length === 0) {
+            container.innerHTML = `
+              <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 30px; background: #130d29; border-radius: 12px;">
+                <i class="fa-solid fa-qrcode" style="font-size: 32px; color: #6b7280; margin-bottom: 10px;"></i>
+                <p>No QR codes in pool yet. Upload at least 5 QRs above to start auto-rotation!</p>
+              </div>
+            `;
+            return;
+          }
+
+          container.innerHTML = adminQrPool.map((qr, idx) => {
+            const isActive = qr.status === 'active';
+            const hits = qr.hits || 0;
+            return `
+              <div style="background: #150d2e; border: 1.5px solid ${isActive ? '#3c2575' : '#271940'}; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                <div style="display: flex; gap: 14px; align-items: flex-start;">
+                  <img src="${qr.image}" alt="QR" style="width: 72px; height: 72px; border-radius: 10px; background: #fff; object-fit: contain; padding: 3px; border: 1.5px solid ${isActive ? '#10b981' : '#64748b'}; cursor: pointer;" onclick="window.open('${qr.image}', '_blank')" title="Click to view full image">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <span style="font-size: 11px; font-weight: 800; color: #a78bfa;">Channel #${idx + 1}</span>
+                      <span class="badge ${isActive ? 'approved' : 'rejected'}" style="font-size: 9.5px; padding: 2px 7px;">
+                        ${isActive ? 'ACTIVE' : 'PAUSED'}
+                      </span>
+                    </div>
+                    <div style="font-size: 13.5px; font-weight: 700; color: #fff; margin-bottom: 3px; word-break: break-word;">${escapeHtml(qr.title || `QR Channel #${idx + 1}`)}</div>
+                    <div style="font-size: 11px; color: #94a3b8; word-break: break-all; margin-bottom: 4px;"><i class="fa-solid fa-at"></i> ${escapeHtml(qr.upi_id || 'Default UPI')}</div>
+                    <div style="font-size: 10.5px; color: #34d399;"><i class="fa-solid fa-chart-simple"></i> Served <strong>${hits}</strong> times to users</div>
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap;">
+                  <button type="button" class="btn-portal-action" onclick="toggleQrStatus('${qr.id}')" style="background: ${isActive ? '#f59e0b' : '#10b981'}; color: #fff; height: 30px; font-size: 11px; padding: 0 10px; flex: 1;">
+                    <i class="fa-solid ${isActive ? 'fa-pause' : 'fa-play'}"></i> ${isActive ? 'Pause' : 'Activate'}
+                  </button>
+                  <button type="button" class="btn-portal-action" onclick="setPrimaryQr('${qr.id}')" style="background: #6366f1; color: #fff; height: 30px; font-size: 11px; padding: 0 10px;" title="Make first in rotation">
+                    <i class="fa-solid fa-star"></i> Primary
+                  </button>
+                  <button type="button" class="btn-portal-action" onclick="editQrDetails('${qr.id}', '${escapeAttr(qr.title)}', '${escapeAttr(qr.upi_id || '')}')" style="background: #3b82f6; color: #fff; height: 30px; font-size: 11px; padding: 0 10px;" title="Edit Title/UPI">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button type="button" class="btn-portal-action" onclick="deleteQrCode('${qr.id}', '${escapeAttr(qr.title)}')" style="background: #ef4444; color: #fff; height: 30px; font-size: 11px; padding: 0 10px;" title="Delete QR">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (e) {
+        console.error("Error loading QR pool:", e);
+      }
+    }
+
+    async function toggleQrStatus(qrId) {
+      try {
+        const res = await fetch(`/api/admin/settings/qr-codes/${qrId}/toggle`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          loadQrCodesPool();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error toggling QR status', 'error');
+      }
+    }
+
+    async function setPrimaryQr(qrId) {
+      try {
+        const res = await fetch(`/api/admin/settings/qr-codes/${qrId}/set-primary`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          loadQrCodesPool();
+          loadSettings();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error setting primary QR', 'error');
+      }
+    }
+
+    async function deleteQrCode(qrId, title) {
+      if (!confirm(`Are you sure you want to remove "${title}" from the rotation pool?`)) return;
+      try {
+        const res = await fetch(`/api/admin/settings/qr-codes/${qrId}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          loadQrCodesPool();
+          loadSettings();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error deleting QR', 'error');
+      }
+    }
+
+    async function editQrDetails(qrId, currentTitle, currentUpi) {
+      const newTitle = prompt('Enter QR Channel Title:', currentTitle);
+      if (newTitle === null) return;
+      const newUpi = prompt('Enter UPI ID for this QR (leave empty for default):', currentUpi);
+      if (newUpi === null) return;
+
+      try {
+        const res = await fetch(`/api/admin/settings/qr-codes/${qrId}/update`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: newTitle, upi_id: newUpi })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('QR details updated successfully!', 'success');
+          loadQrCodesPool();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error updating QR details', 'error');
+      }
+    }
+
+    // QR & Settings
+    function previewUploadedQr(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('adminQrPreview').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    async function loadSettings() {
+      try {
+        const res = await fetch(`/api/payment-config?t=${Date.now()}`);
+        const data = await res.json();
+        if (data.success) {
+          const s = data.settings || data.config || {};
+          const qrUrl = s.qr_image || '/images/kingfisher_upi_qr.jpg';
+          document.getElementById('adminQrPreview').src = qrUrl.includes('?') ? qrUrl : `${qrUrl}?v=${Date.now()}`;
+          if (document.getElementById('activeQrPathText')) {
+            document.getElementById('activeQrPathText').innerText = `Current Active: ${qrUrl}`;
+          }
+          document.getElementById('settingUpiId').value = s.upi_id || '';
+          document.getElementById('settingMerchantName').value = s.merchant_name || '';
+          document.getElementById('settingMinRecharge').value = s.min_recharge || 285;
+          document.getElementById('settingMinWithdraw').value = s.min_withdraw || 200;
+          document.getElementById('settingFeePercent').value = s.withdrawal_fee_percent || 10;
+          document.getElementById('settingTelegram').value = s.telegram_channel || '';
+          document.getElementById('settingWhatsapp').value = s.whatsapp_support || '';
+          document.getElementById('settingAnnouncement').value = s.app_announcement || '';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function uploadQrImmediately() {
+      const fileInput = document.getElementById('qrFileInput');
+      if (!fileInput.files || fileInput.files.length === 0) {
+        showToast('Please choose a QR code image file first!', 'error');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('qr_image_file', fileInput.files[0]);
+
+      showToast('Uploading & updating payment QR...', 'success');
+
+      try {
+        const res = await fetch('/api/admin/settings/upload-qr', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('✅ New QR Code uploaded & live for all users!', 'success');
+          document.getElementById('adminQrPreview').src = `${data.qr_image}?v=${Date.now()}`;
+          if (document.getElementById('activeQrPathText')) {
+            document.getElementById('activeQrPathText').innerText = `Current Active: ${data.qr_image}`;
+          }
+          loadSettings();
+          loadQrCodesPool();
+        } else {
+          showToast(data.message || 'Upload failed', 'error');
+        }
+      } catch (e) {
+        showToast('Error uploading QR file', 'error');
+      }
+    }
+
+    async function saveQRSettings(e) {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('upi_id', document.getElementById('settingUpiId').value);
+      formData.append('merchant_name', document.getElementById('settingMerchantName').value);
+      formData.append('min_recharge', document.getElementById('settingMinRecharge').value);
+      formData.append('min_withdraw', document.getElementById('settingMinWithdraw').value);
+      formData.append('withdrawal_fee_percent', document.getElementById('settingFeePercent').value);
+      formData.append('telegram_channel', document.getElementById('settingTelegram').value);
+      formData.append('whatsapp_support', document.getElementById('settingWhatsapp').value);
+      formData.append('app_announcement', document.getElementById('settingAnnouncement').value);
+
+      const qrUrl = document.getElementById('settingQrUrl').value;
+      if (qrUrl) formData.append('qr_image_url', qrUrl);
+
+      const fileInput = document.getElementById('qrFileInput');
+      if (fileInput.files.length > 0) {
+        formData.append('qr_image_file', fileInput.files[0]);
+      }
+
+      try {
+        const res = await fetch('/api/admin/settings/qr', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Payment & QR Settings saved! Client app is updated live.', 'success');
+          loadSettings();
+          loadQrCodesPool();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error saving settings', 'error');
+      }
+    }
+
+    // Manual Transactions Handler
+    async function handleManualTransaction(e) {
+      e.preventDefault();
+      const phone = document.getElementById('manualUserPhone').value.trim();
+      const type = document.getElementById('manualTxType').value;
+      const amount = parseFloat(document.getElementById('manualTxAmount').value);
+      const reason = document.getElementById('manualTxReason').value.trim();
+
+      if (!phone || isNaN(amount) || amount <= 0) {
+        showToast('Please fill all transaction fields properly', 'error');
+        return;
+      }
+
+      if (!confirm(`Are you sure you want to ${type === 'recharge' ? 'CREDIT ₹' + amount : 'DEBIT ₹' + amount} for user +91 ${phone}?`)) {
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin/transactions/manual', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, type, amount, reason })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          document.getElementById('manualTxAmount').value = '';
+          document.getElementById('manualTxReason').value = '';
+          loadStats();
+          loadUsers();
+          loadFinancialAnalytics();
+          if (type === 'recharge') loadRecharges();
+          else loadWithdrawals();
+        } else {
+          showToast(data.message || 'Operation failed', 'error');
+        }
+      } catch (err) {
+        showToast('Server error executing transaction', 'error');
+      }
+    }
+
+    // Platform Financial Analytics
+    async function loadFinancialAnalytics() {
+      try {
+        const [statsRes, rechRes, wdRes] = await Promise.all([
+          fetch('/api/admin/stats').then(r => r.json()),
+          fetch('/api/admin/recharges').then(r => r.json()),
+          fetch('/api/admin/withdrawals').then(r => r.json())
+        ]);
+
+        const approvedRech = (rechRes.recharges || [])
+          .filter(r => r.status === 'approved')
+          .reduce((sum, r) => sum + Number(r.amount || 0), 0);
+
+        const approvedWd = (wdRes.withdrawals || [])
+          .filter(w => w.status === 'approved')
+          .reduce((sum, w) => sum + Number(w.amount || 0), 0);
+
+        const pendingCount = (rechRes.recharges || []).filter(r => r.status === 'pending').length +
+                             (wdRes.withdrawals || []).filter(w => w.status === 'pending').length;
+
+        const netReserve = approvedRech - approvedWd;
+
+        if (document.getElementById('finApprovedDeposits')) {
+          document.getElementById('finApprovedDeposits').innerText = '₹' + approvedRech.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+        }
+        if (document.getElementById('finApprovedWithdrawals')) {
+          document.getElementById('finApprovedWithdrawals').innerText = '₹' + approvedWd.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+        }
+        if (document.getElementById('finNetReserve')) {
+          document.getElementById('finNetReserve').innerText = '₹' + netReserve.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+          document.getElementById('finNetReserve').style.color = netReserve >= 0 ? '#38bdf8' : '#ef4444';
+        }
+        if (document.getElementById('finPendingVolume')) {
+          document.getElementById('finPendingVolume').innerText = `${pendingCount} Req`;
+        }
+      } catch (e) {
+        console.error('Error loading financial analytics:', e);
+      }
+    }
+
+    // Change Admin Credentials
+    async function handleChangeAdminPassword(e) {
+      e.preventDefault();
+      const current_password = document.getElementById('currentAdminPass').value;
+      const new_username = document.getElementById('newAdminUsername').value;
+      const new_password = document.getElementById('newAdminPass').value;
+
+      try {
+        const res = await fetch('/api/admin/change-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ current_password, new_username, new_password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Admin password updated successfully! Please remember your new password.', 'success');
+          document.getElementById('changeAdminPassForm').reset();
+        } else {
+          showToast(data.message || 'Failed to update credentials', 'error');
+        }
+      } catch (err) {
+        showToast('Error connecting to server', 'error');
+      }
+    }
+
+    // Plans
+    let adminLoadedPlans = [];
+    async function loadPlans() {
+      const tbody = document.getElementById('plansTableBody');
+      try {
+        const res = await fetch('/api/admin/plans');
+        const data = await res.json();
+        if (data.success) {
+          adminLoadedPlans = data.plans || [];
+          tbody.innerHTML = '';
+          adminLoadedPlans.forEach(p => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><img src="${p.image}" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover;"></td>
+              <td><strong>${p.title}</strong></td>
+              <td><span class="badge ${p.category === 'vip' ? 'pending' : 'approved'}">${p.category}</span></td>
+              <td style="font-weight: 800; color: #fbbf24;">₹${p.price}</td>
+              <td style="font-weight: 700; color: #34d399;">₹${p.daily_income}</td>
+              <td style="font-weight: 800;">₹${p.total_income}</td>
+              <td>${p.cycle_days} days</td>
+              <td><span class="badge ${p.status === 'active' ? 'approved' : 'rejected'}">${p.status || 'active'}</span></td>
+              <td>
+                <div class="btn-action-group">
+                  <button class="btn-table-action" onclick="openEditPlanModal('${p.id}')" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.5);"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                  <button class="btn-table-action secondary" onclick="togglePlanStatus('${p.id}')"><i class="fa-solid fa-power-off"></i> Toggle</button>
+                  <button class="btn-table-action reject" onclick="deletePlan('${p.id}')"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="9" style="color: red; text-align: center;">Error loading plans</td></tr>';
+      }
+    }
+
+    async function togglePlanStatus(id) {
+      try {
+        const res = await fetch(`/api/admin/plans/${id}/toggle`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          loadPlans();
+        }
+      } catch (e) {
+        showToast('Error toggling plan', 'error');
+      }
+    }
+
+    function openCreatePlanModal() {
+      document.getElementById('planForm').reset();
+      document.getElementById('planEditId').value = '';
+      document.getElementById('planModalTitle').innerHTML = '<i class="fa-solid fa-plus"></i> Add New Investment Plan';
+      const saveBtn = document.querySelector('#planForm button[type="submit"]');
+      if (saveBtn) saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> Save Plan';
+      document.getElementById('planModal').classList.add('active');
+    }
+
+    function openEditPlanModal(id) {
+      const plan = (adminLoadedPlans || []).find(p => p.id === id);
+      if (!plan) {
+        showToast('Plan not found', 'error');
+        return;
+      }
+      document.getElementById('planForm').reset();
+      document.getElementById('planEditId').value = plan.id;
+      document.getElementById('planTitle').value = plan.title || '';
+      document.getElementById('planCategory').value = plan.category || 'normal';
+      document.getElementById('planPrice').value = plan.price || '';
+      document.getElementById('planDaily').value = plan.daily_income || '';
+      document.getElementById('planCycle').value = plan.cycle_days || '';
+      document.getElementById('planTotal').value = plan.total_income || '';
+      document.getElementById('planLimit').value = plan.limit || 10;
+      document.getElementById('planPresetSelect').value = plan.image || '';
+      document.getElementById('planModalTitle').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit Plan: ' + (plan.title || '');
+      const saveBtn = document.querySelector('#planForm button[type="submit"]');
+      if (saveBtn) saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Update Plan Details';
+      document.getElementById('planModal').classList.add('active');
+    }
+
+    function closePlanModal() {
+      document.getElementById('planModal').classList.remove('active');
+    }
+
+    function calcPlanTotal() {
+      const daily = parseFloat(document.getElementById('planDaily').value) || 0;
+      const days = parseInt(document.getElementById('planCycle').value) || 0;
+      if (daily && days) {
+        document.getElementById('planTotal').value = daily * days;
+      }
+    }
+
+    async function savePlan(e) {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('id', document.getElementById('planEditId').value);
+      formData.append('title', document.getElementById('planTitle').value);
+      formData.append('category', document.getElementById('planCategory').value);
+      formData.append('price', document.getElementById('planPrice').value);
+      formData.append('daily_income', document.getElementById('planDaily').value);
+      formData.append('cycle_days', document.getElementById('planCycle').value);
+      formData.append('total_income', document.getElementById('planTotal').value);
+      formData.append('limit', document.getElementById('planLimit').value);
+
+      const preset = document.getElementById('planPresetSelect').value;
+      if (preset) formData.append('image_url', preset);
+
+      const file = document.getElementById('planImageFile').files[0];
+      if (file) {
+        formData.append('plan_image', file);
+      }
+
+      try {
+        const res = await fetch('/api/admin/plans', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Plan saved successfully!', 'success');
+          closePlanModal();
+          loadPlans();
+          loadStats();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (err) {
+        showToast('Error saving plan', 'error');
+      }
+    }
+
+    async function deletePlan(id) {
+      if (!confirm('Are you sure you want to delete this plan?')) return;
+      try {
+        const res = await fetch(`/api/admin/plans/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Plan deleted!', 'success');
+          loadPlans();
+          loadStats();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Error deleting plan', 'error');
+      }
+    }
+
+    // Users & Balance Adjustment
+    async function loadUsers() {
+      const tbody = document.getElementById('usersTableBody');
+      try {
+        const res = await fetch('/api/admin/users');
+        const data = await res.json();
+        if (data.success) {
+          allUsers = data.users || [];
+          renderUsersTable(allUsers);
+        }
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="8" style="color: red; text-align: center;">Error loading users</td></tr>';
+      }
+    }
+
+    function filterUsersTable() {
+      const q = (document.getElementById('userSearchInput').value || '').toLowerCase().trim();
+      const filtered = allUsers.filter(u => {
+        return !q || 
+          (u.phone && u.phone.includes(q)) || 
+          (u.name && u.name.toLowerCase().includes(q)) || 
+          (u.ref_code && u.ref_code.includes(q));
+      });
+      renderUsersTable(filtered);
+    }
+
+    function renderUsersTable(users) {
+      const tbody = document.getElementById('usersTableBody');
+      tbody.innerHTML = '';
+      if (users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No matching users.</td></tr>';
+        return;
+      }
+      users.forEach(u => {
+        const tr = document.createElement('tr');
+        const isBanned = u.status === 'banned';
+        tr.innerHTML = `
+          <td><strong>${u.name || 'User'}</strong></td>
+          <td><span style="font-family: monospace; color: #fde68a;">+91 ${u.phone}</span></td>
+          <td style="font-weight: 800; color: #34d399; font-size: 15px;">₹${Number(u.balance).toFixed(2)}</td>
+          <td>₹${Number(u.total_recharge || 0).toFixed(2)}</td>
+          <td>₹${Number(u.total_withdraw || 0).toFixed(2)}</td>
+          <td><span class="badge ${isBanned ? 'banned' : 'approved'}">${(u.status || 'active').toUpperCase()}</span></td>
+          <td><span style="background: #2a0a10; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-family: monospace;">${u.ref_code || '-'}</span></td>
+          <td>
+            <div class="btn-action-group">
+              <button class="btn-table-action edit" onclick="openBalanceModal('${u.id}', '${u.name}', '${u.phone}', ${u.balance})">
+                <i class="fa-solid fa-wallet"></i> Balance
+              </button>
+              <button class="btn-table-action warn" onclick="toggleUserBan('${u.id}')">
+                <i class="fa-solid fa-user-slash"></i> ${isBanned ? 'Unban' : 'Ban'}
+              </button>
+              <button class="btn-table-action secondary" onclick="resetUserPassword('${u.id}')">
+                <i class="fa-solid fa-key"></i> Reset
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function toggleUserBan(id) {
+      try {
+        const res = await fetch(`/api/admin/user/${id}/toggle-ban`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          loadUsers();
+        }
+      } catch (e) {
+        showToast('Error changing ban status', 'error');
+      }
+    }
+
+    async function resetUserPassword(id) {
+      const newPass = prompt("Enter new password for this user (defaults to 123456):", "123456");
+      if (newPass === null) return;
+      try {
+        const res = await fetch(`/api/admin/user/${id}/reset-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ new_password: newPass })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+        }
+      } catch (e) {
+        showToast('Error resetting password', 'error');
+      }
+    }
+
+    function openBalanceModal(id, name, phone, bal) {
+      document.getElementById('adjUserId').value = id;
+      document.getElementById('adjUserInfo').innerHTML = `User: <strong>${name}</strong> (+91 ${phone}) | Current Balance: <strong style="color: #34d399;">₹${Number(bal).toFixed(2)}</strong>`;
+      document.getElementById('adjAmount').value = '';
+      document.getElementById('balanceModal').classList.add('active');
+    }
+
+    function closeBalanceModal() {
+      document.getElementById('balanceModal').classList.remove('active');
+    }
+
+    async function submitBalanceAdjust(e) {
+      e.preventDefault();
+      const uid = document.getElementById('adjUserId').value;
+      const type = document.getElementById('adjType').value;
+      const amount = document.getElementById('adjAmount').value;
+
+      try {
+        const res = await fetch(`/api/admin/user/${uid}/balance`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type, amount })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, 'success');
+          closeBalanceModal();
+          loadUsers();
+          loadStats();
+        } else {
+          showToast(data.message, 'error');
+        }
+      } catch (err) {
+        showToast('Error adjusting balance', 'error');
+      }
+    }
+
+    function exportData(type) {
+      window.open(`/api/admin/export/${type}`, '_blank');
+    }
+  </script>
+</body>
+</html>

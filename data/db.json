@@ -1,0 +1,167 @@
+{
+  "admin": {
+    "username": "Kingfisher_SuperAdmin2",
+    "password": "Kingfisher@2026#BetaAdmin!"
+  },
+  "settings": {
+    "qr_image": "/images/kingfisher_upi_qr.jpg",
+    "upi_id": "kingfisherpay2@okaxis",
+    "merchant_name": "KINGFISHER VENTURES INTERNATIONAL PVT LTD",
+    "min_recharge": 285,
+    "min_withdraw": 200,
+    "withdrawal_fee_percent": 10,
+    "withdrawal_time": "09:00 - 18:00 (Daily)",
+    "telegram_channel": "https://t.me/kingfisher_capital_portal2",
+    "whatsapp_support": "+919876543210",
+    "app_announcement": "\ud83d\udc51 Welcome to Kingfisher Capital Portal 2 (Sovereign & Beverages)! Enjoy up to 40% 3-level team commission and daily instant withdrawals! Fly The Good Times!",
+    "qr_rotation_index": 0,
+    "qr_codes": [
+      {
+        "id": "qr_1",
+        "image": "/images/kingfisher_upi_qr.jpg",
+        "title": "Kingfisher QR Channel 1 (Primary VIP)",
+        "upi_id": "kingfisherpay2@okaxis",
+        "status": "active",
+        "created_at": "2026-10-26T12:00:00.000Z",
+        "hits": 0
+      },
+      {
+        "id": "qr_2",
+        "image": "/images/kingfisher_upi_qr.jpg",
+        "title": "Kingfisher QR Channel 2 (FastPay PhonePe)",
+        "upi_id": "kingfisherpay2@okaxis",
+        "status": "active",
+        "created_at": "2026-10-26T12:00:00.000Z",
+        "hits": 0
+      }
+    ]
+  },
+  "plans": [
+    {
+      "id": "plan_offer",
+      "category": "normal",
+      "title": "Kingfisher Flight Experience (Offer Plan)",
+      "price": 720,
+      "daily_income": 4354,
+      "total_income": 8708,
+      "cycle_days": 2,
+      "limit": 10,
+      "image": "/images/kingfisher_plan_flight.jpg",
+      "status": "active"
+    },
+    {
+      "id": "plan_beer",
+      "category": "normal",
+      "title": "Kingfisher Premium Draught \u2013 Daily Return",
+      "price": 285,
+      "daily_income": 245,
+      "total_income": 7350,
+      "cycle_days": 30,
+      "limit": 10,
+      "image": "/images/kingfisher_plan_beer.jpg",
+      "status": "active"
+    },
+    {
+      "id": "plan_ultra",
+      "category": "normal",
+      "title": "Kingfisher Ultra Crisp \u2013 Daily Return",
+      "price": 1000,
+      "daily_income": 8586,
+      "total_income": 25758,
+      "cycle_days": 3,
+      "limit": 10,
+      "image": "/images/kingfisher_plan_ultra.jpg",
+      "status": "active"
+    },
+    {
+      "id": "plan_airbus",
+      "category": "normal",
+      "title": "Kingfisher Aviation Airbus A320 Fleet",
+      "price": 2200,
+      "daily_income": 1967,
+      "total_income": 37373,
+      "cycle_days": 19,
+      "limit": 10,
+      "image": "/images/kingfisher_banner.jpg",
+      "status": "active"
+    },
+    {
+      "id": "plan_fleet",
+      "category": "normal",
+      "title": "Kingfisher Royal Aviation Fleet \u2013 Daily Return",
+      "price": 4735,
+      "daily_income": 19053,
+      "total_income": 38106,
+      "cycle_days": 2,
+      "limit": 10,
+      "image": "/images/kingfisher_plan_flight.jpg",
+      "status": "active"
+    },
+    {
+      "id": "plan_vip_jet",
+      "category": "vip",
+      "title": "Kingfisher Private Jet VIP Club",
+      "price": 8500,
+      "daily_income": 38250,
+      "total_income": 76500,
+      "cycle_days": 2,
+      "limit": 5,
+      "image": "/images/kingfisher_plan_vip.jpg",
+      "status": "active"
+    },
+    {
+      "id": "plan_vip_billionaire",
+      "category": "vip",
+      "title": "Kingfisher Sovereign Billionaire Club",
+      "price": 15000,
+      "daily_income": 72000,
+      "total_income": 144000,
+      "cycle_days": 2,
+      "limit": 3,
+      "image": "/images/kingfisher_plan_vip.jpg",
+      "status": "active"
+    }
+  ],
+  "users": [
+    {
+      "id": "u_demo",
+      "phone": "9876543210",
+      "name": "Karan Singhania",
+      "password": "password123",
+      "ref_code": "892345",
+      "invited_by": null,
+      "balance": 1800,
+      "total_income": 11200,
+      "total_recharge": 1200,
+      "total_withdraw": 0,
+      "bank_account": {
+        "account_holder": "Karan Singhania",
+        "bank_name": "ICICI Bank",
+        "account_number": "001205012345",
+        "ifsc": "ICIC0000012",
+        "upi_id": "karan@upi"
+      },
+      "created_at": "2026-10-26T12:00:00.000Z"
+    }
+  ],
+  "user_plans": [
+    {
+      "id": "up_1",
+      "user_id": "u_demo",
+      "plan_id": "plan_offer",
+      "plan_title": "Kingfisher Flight Experience (Offer Plan)",
+      "price": 720,
+      "daily_income": 4354,
+      "total_income": 8708,
+      "cycle_days": 2,
+      "days_passed": 1,
+      "total_claimed": 4354,
+      "last_claim_date": "2026-10-26",
+      "purchase_date": "2026-10-25T12:00:00.000Z",
+      "status": "running"
+    }
+  ],
+  "recharges": [],
+  "withdrawals": [],
+  "spins": []
+}

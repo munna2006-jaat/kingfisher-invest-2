@@ -1,0 +1,15 @@
+{
+  "name": "kingfisher-invest-2",
+  "version": "2.0.0",
+  "description": "Kingfisher Capital Sovereign & Beverages Investment Portal (Instance 2)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "multer": "^2.4.0"
+  }
+}
